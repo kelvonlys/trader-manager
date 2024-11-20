@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import React from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import TradingViewWidget from "./basic-chart/tradingview-widget"
 
 export const metadata: Metadata = {
   title: "Next.js Basic Chart Page | NextAdmin - Next.js Dashboard Kit",
@@ -10,14 +11,23 @@ export const metadata: Metadata = {
   // other metadata
 };
 
-const BasicChartPage: React.FC = () => {
+export default function TradingviewChart() {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Basic Chart" />
-
-      <BasicChart />
+      <h1>My TradingView Widget</h1>
+      <TradingViewWidget />
     </DefaultLayout>
   );
-};
+}
 
-export default BasicChartPage;
+// const BasicChartPage: React.FC = () => {
+//   return (
+//     <DefaultLayout>
+//       <Breadcrumb pageName="Basic Chart" />
+
+//       <BasicChart />
+//     </DefaultLayout>
+//   );
+// };
+
+// export default BasicChartPage;
