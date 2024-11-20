@@ -13,10 +13,8 @@ export const metadata: Metadata = {
 
 export default function TradingviewChart() {
   return (
-       
-      // <TradingViewWidget />
     <DefaultLayout>
-      <TradingViewWidget />
+        <TradingViewWidget />  
     </DefaultLayout>
   );
 }

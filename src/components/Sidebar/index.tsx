@@ -229,8 +229,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               style={{ width: "auto", height: "auto" }}
             /> */}
 
-            <p className="dark:hidden">TRADER MANAGER</p>
-            <p className="hidden dark:block">TRADER MANAGER</p>
+            <p className="text-dark dark:text-white font-bold dark:hidden">TRADER MANAGER</p>
+            <p className="text-dark dark:text-white font-bold hidden dark:block">TRADER MANAGER</p>
           </Link>
 
           <button

@@ -2,6 +2,7 @@
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import React from "react";
+import { useWindowDimensions } from "./useWindowDimensions"
 
 export const metadata: Metadata = {
   title: "Trader Manager Dashboard Page",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function TradingViewWidget() {
+  const { width, height } = useWindowDimensions();
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -18,6 +20,7 @@ export default function TradingViewWidget() {
       script.type = 'text/javascript';
       script.async = true;
 
+      console.log("width: ", width)
       const chartOptions = `
         {
           "width": "980",
