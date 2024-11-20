@@ -5,11 +5,6 @@ import React from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import TradingViewWidget from '@/app/charts/basic-chart/tradingview-widget';
 
-export const metadata: Metadata = {
-  title: "Next.js Basic Chart Page | NextAdmin - Next.js Dashboard Kit",
-  description: "This is Next.js Basic Chart page for NextAdmin Dashboard Kit",
-  // other metadata
-};
 
 export default function TradingviewChart() {
   return (
