@@ -1,5 +1,6 @@
 import { INSTRUMENT } from "@/types/instrument";
 import Image from "next/image";
+import Link from 'next/link'; // Import Link component
 
 const instrumentData: INSTRUMENT[] = [
   {
@@ -84,7 +85,9 @@ const InstrutmentTable = () => {
             }`}
             key={key}
           >
+            
             <div className="relative">
+              <Link href="/charts">
               <div className="absolute inset-0 flex items-center">
                 <div className="relative w-[48px] h-[48px]">
                   <Image 
@@ -107,9 +110,9 @@ const InstrutmentTable = () => {
                 <p className="font-medium text-dark dark:text-white">
                   {pair.pair}
                 </p>
-              </div>
+                </div>
+                </Link>
             </div>
-
 
             <div className="flex items-center justify-center px-2 py-4">
               <p className="font-medium text-dark dark:text-white">
