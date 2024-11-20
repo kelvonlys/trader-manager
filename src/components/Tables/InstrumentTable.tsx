@@ -3,22 +3,25 @@ import Image from "next/image";
 
 const instrumentData: INSTRUMENT[] = [
   {
-    logo: "/images/instruments/xau.svg",
+    logoTop: "/images/instruments/xau.svg",
+    logoBottom: "/images/instruments/usd.svg",
     pair: "Gold",
     bid: 2625.34,
     ask: 2625.44,
     spread: 0.11,
   },
   {
-    logo: "/images/instruments/eu.svg",
-    pair: "EURUSD",
+    logoTop: "/images/instruments/eu.svg",
+    logoBottom: "/images/instruments/usd.svg",
+    pair: "Gold",
     bid: 2625.34,
     ask: 2625.44,
     spread: 0.11,
   },
   {
-    logo: "/images/instruments/btc.svg",
-    pair: "Bitcoin",
+    logoTop: "/images/instruments/xau.svg",
+    logoBottom: "/images/instruments/usd.svg",
+    pair: "Gold",
     bid: 2625.34,
     ask: 2625.44,
     spread: 0.11,
@@ -55,19 +58,9 @@ const TableOne = () => {
               Spread
             </h5>
           </div>
-          {/* <div className="hidden px-2 pb-3.5 text-center sm:block">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Sales
-            </h5>
-          </div>
-          <div className="hidden px-2 pb-3.5 text-center sm:block">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Conversion
-            </h5>
-          </div> */}
         </div>
 
-        {instrumentData.map((brand, key) => (
+        {instrumentData.map((pair, key) => (
           <div
             className={`grid grid-cols-3 sm:grid-cols-5 ${
               key === instrumentData.length - 1
@@ -76,30 +69,45 @@ const TableOne = () => {
             }`}
             key={key}
           >
-            <div className="flex items-center gap-3.5 px-2 py-4">
-              <div className="flex-shrink-0">
-                <Image src={brand.logo} alt="Brand" width={48} height={48} />
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="relative w-[48px] h-[48px]">
+                  <Image 
+                    className="absolute inset-0 flex items-center justify-center transform translate-x-3 z-10 boxShadowWhite rounded-full" 
+                    src={pair.logoTop} 
+                    alt="pair" 
+                    width={28} 
+                    height={28} 
+                  />
+                </div>
+                <div className="relative w-[48px] h-[48px] ">
+                  <Image 
+                    className="absolute inset-0 flex items-center justify-center transform -translate-x-2/3 translate-y-1/2 z-20 boxShadowWhite rounded-full" 
+                    src={pair.logoBottom} 
+                    alt="pair" 
+                    width={28} 
+                    height={28} 
+                  />
+                </div>
               </div>
-              <p className="hidden font-medium text-dark dark:text-white sm:block">
-                {brand.pair}
-              </p>
             </div>
+
 
             <div className="flex items-center justify-center px-2 py-4">
               <p className="font-medium text-dark dark:text-white">
-                {brand.bid}
+                {pair.bid}
               </p>
             </div>
 
             <div className="flex items-center justify-center px-2 py-4">
               <p className="font-medium text-green-light-1">
-                {brand.ask}
+                {pair.ask}
               </p>
             </div>
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
               <p className="font-medium text-dark dark:text-white">
-                {brand.spread}
+                {pair.spread}
               </p>
             </div>
           </div>
