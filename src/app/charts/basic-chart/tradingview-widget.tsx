@@ -26,7 +26,7 @@ export default function TradingViewWidget() {
           "width": "980",
           "height": "610",
           "autosize": true,
-          "symbol": "NASDAQ:AAPL",
+          "symbol": "OANDA:XAUUSD",
           "interval": "D",
           "timezone": "Etc/UTC",
           "theme": "dark",

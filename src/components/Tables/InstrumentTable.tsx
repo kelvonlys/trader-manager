@@ -5,7 +5,7 @@ const instrumentData: INSTRUMENT[] = [
   {
     logoTop: "/images/instruments/xau.svg",
     logoBottom: "/images/instruments/usd.svg",
-    pair: "Gold",
+    pair: "XAUUSD",
     bid: 2625.34,
     ask: 2625.44,
     spread: 0.11,
@@ -13,7 +13,15 @@ const instrumentData: INSTRUMENT[] = [
   {
     logoTop: "/images/instruments/eu.svg",
     logoBottom: "/images/instruments/usd.svg",
-    pair: "Gold",
+    pair: "EURUSD",
+    bid: 2625.34,
+    ask: 2625.44,
+    spread: 0.11,
+  },
+  {
+    logoTop: "/images/instruments/btc.svg",
+    logoBottom: "/images/instruments/usd.svg",
+    pair: "BTCUSD",
     bid: 2625.34,
     ask: 2625.44,
     spread: 0.11,
@@ -21,15 +29,22 @@ const instrumentData: INSTRUMENT[] = [
   {
     logoTop: "/images/instruments/xau.svg",
     logoBottom: "/images/instruments/usd.svg",
-    pair: "Gold",
+    pair: "XAUUSD",
     bid: 2625.34,
     ask: 2625.44,
     spread: 0.11,
   },
-  
+  {
+    logoTop: "/images/instruments/btc.svg",
+    logoBottom: "/images/instruments/usd.svg",
+    pair: "BTCUSD",
+    bid: 2625.34,
+    ask: 2625.44,
+    spread: 0.11,
+  },
 ];
 
-const TableOne = () => {
+const InstrutmentTable = () => {
   return (
     <div className="rounded-[10px] bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
       <h4 className="mb-5.5 text-body-2xlg font-bold text-dark dark:text-white">
@@ -89,6 +104,9 @@ const TableOne = () => {
                     height={28} 
                   />
                 </div>
+                <p className="font-medium text-dark dark:text-white">
+                  {pair.pair}
+                </p>
               </div>
             </div>
 
@@ -117,4 +135,4 @@ const TableOne = () => {
   );
 };
 
-export default TableOne;
+export default InstrutmentTable;
