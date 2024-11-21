@@ -69,7 +69,7 @@ const InstrutmentTable = () => {
               Ask
             </h5>
           </div>
-          <div className="px-2 pb-3.5 text-center">
+          <div className="hidden px-2 pb-3.5 text-center sm:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Spread
             </h5>
@@ -85,8 +85,21 @@ const InstrutmentTable = () => {
             }`}
             key={key}
           >
-            
-            <div className="relative">
+            <div className="flex items-center gap-3.5 px-2 py-4">
+              <div className="flex-shrink-0 h-12">
+                <Image className="boxShadowWhite rounded-full" src={pair.logoTop} alt="Brand" width={30} height={30} />
+                <Image
+                  className="transform translate-x-1/2 -translate-y-1/2 z-20 boxShadowWhite rounded-full"
+                  src={pair.logoBottom}
+                  width={30}
+                  height={30}
+                />
+              </div>
+              <p className="hidden font-medium text-dark dark:text-white sm:block ml-3">
+                {pair.pair}
+              </p>
+            </div>
+            {/* <div className="relative">
               <Link href="/charts">
               <div className="absolute inset-0 flex items-center">
                 <div className="relative w-[48px] h-[48px]">
@@ -107,12 +120,12 @@ const InstrutmentTable = () => {
                     height={28} 
                   />
                 </div>
-                <p className="font-medium text-dark dark:text-white">
+                <p className="hidden font-medium text-dark dark:text-white sm:block">
                   {pair.pair}
                 </p>
                 </div>
                 </Link>
-            </div>
+            </div> */}
 
             <div className="flex items-center justify-center px-2 py-4">
               <p className="font-medium text-dark dark:text-white">
