@@ -9,22 +9,21 @@ import DataStatsOne from "@/components/DataStats/DataStatsOne";
 import ChartOne from "@/components/Charts/ChartOne";
 import TradingViewWidget from '@/app/charts/basic-chart/tradingview-widget';
 import InstrumentTable from "@/components/Tables/InstrumentTable"
+import WatchlistTable from "../Tables/WatchlistTable";
 
-const ECommerce: React.FC = () => {
+const Dashboard: React.FC = () => {
   return (
     <>
       <DataStatsOne />
-      
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-9 2xl:gap-7.5">
-        
         <div className="col-span-12 xl:col-span-8">
           <InstrumentTable />
         </div>
-        <ChatCard />
+        <div className="col-span-12 xl:col-span-8"><WatchlistTable /></div>
       </div>
       {/* <TradingViewWidget />  */}
     </>
   );
 };
 
-export default ECommerce;
+export default Dashboard;

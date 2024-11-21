@@ -71,7 +71,7 @@ const Header = (props: {
             <h1 className="mb-0.5 text-heading-5 font-bold text-dark dark:text-white">
               Dashboard
             </h1>
-            <p className="font-bold">Manager your trades here</p>
+            <p className="font-bold">Manage your trades here</p>
           </div>
         </div>
 

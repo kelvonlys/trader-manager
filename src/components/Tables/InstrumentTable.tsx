@@ -13,7 +13,7 @@ const positionData: INSTRUMENT[] = [
     takeProfit: 120,
     currentPrice: 109,
     swap: -2,
-    profit: 3,
+    profit: 3035.35,
   },
   {
     pair: "USDJPY",
@@ -25,7 +25,7 @@ const positionData: INSTRUMENT[] = [
     takeProfit: 120,
     currentPrice: 109,
     swap: -2,
-    profit: 3,
+    profit: -300.22,
   },
 ];
 
@@ -37,7 +37,7 @@ const InstrutmentTable = () => {
       </h4>
 
       <div className="flex flex-col">
-        <div className="grid grid-cols-3 sm:grid-cols-5">
+        <div className="grid grid-cols-3 sm:grid-cols-7">
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Symbol
@@ -63,7 +63,7 @@ const InstrutmentTable = () => {
               T / P
             </h5>
           </div>
-          {/* <div className="hidden px-2 pb-3.5 text-center sm:block">
+          <div className="hidden px-2 pb-3.5 text-center sm:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Current Price
             </h5>
@@ -72,12 +72,12 @@ const InstrutmentTable = () => {
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Profit
             </h5>
-          </div> */}
+          </div>
         </div>
 
         {positionData.map((position, key) => (
           <div
-            className={`grid grid-cols-3 sm:grid-cols-5 ${
+            className={`grid grid-cols-3 sm:grid-cols-7 ${
               key === positionData.length - 1
                 ? ""
                 : "border-b border-stroke dark:border-dark-3"
@@ -85,7 +85,7 @@ const InstrutmentTable = () => {
             key={key}
           >
             <div className="flex items-center gap-3.5 px-2 py-4">
-              <p className="hidden font-medium text-dark dark:text-white sm:block">
+              <p className="font-medium text-dark dark:text-white">
                 {position.pair}
               </p>
             </div>
@@ -97,7 +97,7 @@ const InstrutmentTable = () => {
             </div>
 
             <div className="flex items-center justify-center px-2 py-4">
-              <p className="font-medium text-green-light-1">
+              <p className="font-medium text-dark dark:text-white">
                 {position.entryPrice}
               </p>
             </div>
@@ -110,10 +110,26 @@ const InstrutmentTable = () => {
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
               <p className="font-medium text-dark dark:text-white">
+                {position.currentPrice}
+              </p>
+            </div>
+
+            <div className="hidden items-center justify-center px-2 py-4 sm:flex">
+              <p className="font-medium text-dark dark:text-white">
                 {position.takeProfit}
               </p>
             </div>
+
+            <div className="hidden items-center justify-center px-2 py-4 sm:flex">
+              <p className={`font-medium ${
+                position.profit > 0 ? 'text-blue-500' : 'text-red-500'}`
+              }>
+                {position.profit}
+              </p>
+            </div>
           </div>
+
+          
         ))}
       </div>
     </div>
