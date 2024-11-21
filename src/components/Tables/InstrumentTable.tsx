@@ -72,6 +72,7 @@ const InstrutmentTable = () => {
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Profit
             </h5>
+            
           </div>
         </div>
 

@@ -1,6 +1,7 @@
 import { WATCHLIST } from "@/types/watchlist";
 import Image from "next/image";
 import Link from 'next/link'; // Import Link component
+import ButtonDefault from "@/components/Buttons/ButtonDefault";
 
 const watchlistData: WATCHLIST[] = [
   {
@@ -53,32 +54,37 @@ const WatchlistTable = () => {
       </h4>
 
       <div className="flex flex-col">
-        <div className="grid grid-cols-3 sm:grid-cols-5">
+        <div className="grid grid-cols-3 md:grid-cols-5">
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Pairs
+              Symbol
             </h5>
           </div>
-          <div className="px-2 pb-3.5 text-center">
+          <div className="hidden px-2 pb-3.5 text-center md:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Bid
             </h5>
           </div>
-          <div className="px-2 pb-3.5 text-center">
+          <div className="hidden px-2 pb-3.5 text-center md:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Ask
             </h5>
           </div>
-          <div className="hidden px-2 pb-3.5 text-center sm:block">
+          <div className="px-2 pb-3.5 text-center">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Spread
+            </h5>
+          </div>
+          <div className="px-2 pb-3.5 text-center">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              
             </h5>
           </div>
         </div>
 
         {watchlistData.map((pair, key) => (
           <div
-            className={`grid grid-cols-3 sm:grid-cols-5 ${
+            className={`grid grid-cols-3 md:grid-cols-5 ${
               key === watchlistData.length - 1
                 ? ""
                 : "border-b border-stroke dark:border-dark-3"
@@ -102,22 +108,31 @@ const WatchlistTable = () => {
                 {pair.pair}
               </p>
             </div>
-            <div className="flex items-center justify-center px-2 py-4">
+            <div className="hidden items-center justify-center px-2 py-4 md:flex">
               <p className="font-medium text-dark dark:text-white">
                 {pair.bid}
               </p>
             </div>
 
-            <div className="flex items-center justify-center px-2 py-4">
+            <div className="hidden items-center justify-center px-2 py-4 md:flex">
               <p className="font-medium text-green-light-1">
                 {pair.ask}
               </p>
             </div>
 
-            <div className="hidden items-center justify-center px-2 py-4 sm:flex">
+            <div className="flex items-center justify-center px-2 py-4">
               <p className="font-medium text-dark dark:text-white">
                 {pair.spread}
               </p>
+            </div>
+
+            <div className="flex items-center justify-center px-2 py-4">
+                <ButtonDefault
+                  label="Trade"
+                  link="/"
+                  customClasses="bg-blue-700 text-white px-10 py-3.5 lg:px-8 xl:px-10"
+                />
+              
             </div>
           </div>
         ))}

@@ -8,7 +8,7 @@ import MapOne from "../Maps/MapOne";
 import DataStatsOne from "@/components/DataStats/DataStatsOne";
 import ChartOne from "@/components/Charts/ChartOne";
 import TradingViewWidget from '@/app/charts/basic-chart/tradingview-widget';
-import InstrumentTable from "@/components/Tables/InstrumentTable"
+import InstrumentTable from "@/components/Tables/InstrumentTable";
 import WatchlistTable from "../Tables/WatchlistTable";
 
 const Dashboard: React.FC = () => {
@@ -19,7 +19,9 @@ const Dashboard: React.FC = () => {
         <div className="col-span-12 xl:col-span-8">
           <InstrumentTable />
         </div>
-        <div className="col-span-12 xl:col-span-8"><WatchlistTable /></div>
+        <div className="col-span-12 xl:col-span-8">
+          <WatchlistTable />
+        </div>
       </div>
       {/* <TradingViewWidget />  */}
     </>
