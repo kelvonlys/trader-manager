@@ -1,8 +1,12 @@
 export type INSTRUMENT = {
-  logoTop: string;
-  logoBottom: string;
   pair: string;
-  bid: number;
-  ask: number;
-  spread: number;
+  ticket: string;
+  time: string;
+  type: string;
+  entryPrice: number;
+  stopLoss: number;
+  takeProfit: number;
+  currentPrice: number;
+  swap: number;
+  profit: number;
 };

@@ -2,46 +2,30 @@ import { INSTRUMENT } from "@/types/instrument";
 import Image from "next/image";
 import Link from 'next/link'; // Import Link component
 
-const instrumentData: INSTRUMENT[] = [
+const positionData: INSTRUMENT[] = [
   {
-    logoTop: "/images/instruments/xau.svg",
-    logoBottom: "/images/instruments/usd.svg",
-    pair: "XAUUSD",
-    bid: 2625.34,
-    ask: 2625.44,
-    spread: 0.11,
+    pair: "USDJPY",
+    ticket: "2134519",
+    time: "11.18 07:05:59",
+    type: "sell",
+    entryPrice: 109.4,
+    stopLoss: 110,
+    takeProfit: 120,
+    currentPrice: 109,
+    swap: -2,
+    profit: 3,
   },
   {
-    logoTop: "/images/instruments/eu.svg",
-    logoBottom: "/images/instruments/usd.svg",
-    pair: "EURUSD",
-    bid: 2625.34,
-    ask: 2625.44,
-    spread: 0.11,
-  },
-  {
-    logoTop: "/images/instruments/btc.svg",
-    logoBottom: "/images/instruments/usd.svg",
-    pair: "BTCUSD",
-    bid: 2625.34,
-    ask: 2625.44,
-    spread: 0.11,
-  },
-  {
-    logoTop: "/images/instruments/xau.svg",
-    logoBottom: "/images/instruments/usd.svg",
-    pair: "XAUUSD",
-    bid: 2625.34,
-    ask: 2625.44,
-    spread: 0.11,
-  },
-  {
-    logoTop: "/images/instruments/btc.svg",
-    logoBottom: "/images/instruments/usd.svg",
-    pair: "BTCUSD",
-    bid: 2625.34,
-    ask: 2625.44,
-    spread: 0.11,
+    pair: "USDJPY",
+    ticket: "2134519",
+    time: "11.18 07:05:59",
+    type: "sell",
+    entryPrice: 109.4,
+    stopLoss: 110,
+    takeProfit: 120,
+    currentPrice: 109,
+    swap: -2,
+    profit: 3,
   },
 ];
 
@@ -49,99 +33,84 @@ const InstrutmentTable = () => {
   return (
     <div className="rounded-[10px] bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
       <h4 className="mb-5.5 text-body-2xlg font-bold text-dark dark:text-white">
-        Instrument  
+        Current Position
       </h4>
 
       <div className="flex flex-col">
         <div className="grid grid-cols-3 sm:grid-cols-5">
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Pairs
+              Symbol
             </h5>
           </div>
           <div className="px-2 pb-3.5 text-center">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Bid
+              Type
             </h5>
           </div>
           <div className="px-2 pb-3.5 text-center">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Ask
+              Entry Price
             </h5>
           </div>
           <div className="hidden px-2 pb-3.5 text-center sm:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Spread
+              S / L
             </h5>
           </div>
+          <div className="hidden px-2 pb-3.5 text-center sm:block">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              T / P
+            </h5>
+          </div>
+          {/* <div className="hidden px-2 pb-3.5 text-center sm:block">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Current Price
+            </h5>
+          </div>
+          <div className="hidden px-2 pb-3.5 text-center sm:block">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Profit
+            </h5>
+          </div> */}
         </div>
 
-        {instrumentData.map((pair, key) => (
+        {positionData.map((position, key) => (
           <div
             className={`grid grid-cols-3 sm:grid-cols-5 ${
-              key === instrumentData.length - 1
+              key === positionData.length - 1
                 ? ""
                 : "border-b border-stroke dark:border-dark-3"
             }`}
             key={key}
           >
             <div className="flex items-center gap-3.5 px-2 py-4">
-              <div className="flex-shrink-0 h-12">
-                <Image className="boxShadowWhite rounded-full" src={pair.logoTop} alt="Brand" width={30} height={30} />
-                <Image
-                  className="transform translate-x-1/2 -translate-y-1/2 z-20 boxShadowWhite rounded-full"
-                  src={pair.logoBottom}
-                  width={30}
-                  height={30}
-                />
-              </div>
-              <p className="hidden font-medium text-dark dark:text-white sm:block ml-3">
-                {pair.pair}
+              <p className="hidden font-medium text-dark dark:text-white sm:block">
+                {position.pair}
               </p>
             </div>
-            {/* <div className="relative">
-              <Link href="/charts">
-              <div className="absolute inset-0 flex items-center">
-                <div className="relative w-[48px] h-[48px]">
-                  <Image 
-                    className="absolute inset-0 flex items-center justify-center transform translate-x-3 z-10 boxShadowWhite rounded-full" 
-                    src={pair.logoTop} 
-                    alt="pair" 
-                    width={28} 
-                    height={28} 
-                  />
-                </div>
-                <div className="relative w-[48px] h-[48px] ">
-                  <Image 
-                    className="absolute inset-0 flex items-center justify-center transform -translate-x-2/3 translate-y-1/2 z-20 boxShadowWhite rounded-full" 
-                    src={pair.logoBottom} 
-                    alt="pair" 
-                    width={28} 
-                    height={28} 
-                  />
-                </div>
-                <p className="hidden font-medium text-dark dark:text-white sm:block">
-                  {pair.pair}
-                </p>
-                </div>
-                </Link>
-            </div> */}
 
             <div className="flex items-center justify-center px-2 py-4">
               <p className="font-medium text-dark dark:text-white">
-                {pair.bid}
+                {position.type}
               </p>
             </div>
 
             <div className="flex items-center justify-center px-2 py-4">
               <p className="font-medium text-green-light-1">
-                {pair.ask}
+                {position.entryPrice}
               </p>
             </div>
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
               <p className="font-medium text-dark dark:text-white">
-                {pair.spread}
+                {position.stopLoss}
+              </p>
+            </div>
+
+            <div className="hidden items-center justify-center px-2 py-4 sm:flex">
+              <p className="font-medium text-dark dark:text-white">
+                {position.takeProfit}
               </p>
             </div>
           </div>
