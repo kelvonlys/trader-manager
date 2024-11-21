@@ -94,10 +94,12 @@ const WatchlistTable = () => {
             <div className="flex items-center gap-3.5 px-2 py-4">
               <div className="flex-shrink-0 h-12">
                 <Image
+                  alt="First Symbol"
                   className="boxShadowWhite rounded-full"
                   src={pair.logoTop}
                   width={30} height={30} />
                 <Image
+                  alt="Second Symbol"
                   className="transform translate-x-1/2 -translate-y-1/2 z-20 boxShadowWhite rounded-full"
                   src={pair.logoBottom}
                   width={30}
