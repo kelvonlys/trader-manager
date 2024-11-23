@@ -27,11 +27,15 @@ export default function MarketData() {
     }
 
     fetchData() // Initial fetch
+    const interval = setInterval(fetchData, 500);
 
-    return () => {}
+    return () => {
+      clearInterval(interval);
+    }
+
   }, [])
 
-  if (isLoading) return <p>Loading market data...</p>
+  // if (isLoading) return <p>Loading market data...</p>
   if (error) return (
     <div>
       <p>Error: {error}</p>
