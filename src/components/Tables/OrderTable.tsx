@@ -1,6 +1,7 @@
 import { ORDER } from "@/types/order";
 import Image from "next/image";
 import Link from 'next/link'; // Import Link component
+import MarketData from "../ApiComponent/ApiComponent";
 
 const orderData: ORDER[] = [
   {
@@ -104,13 +105,13 @@ const OrderTable = () => {
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
               <p className="font-medium text-dark dark:text-white">
-                {position.currentPrice}
+                 {position.takeProfit}
               </p>
             </div>
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
               <p className="font-medium text-dark dark:text-white">
-                {position.takeProfit}
+                <MarketData />
               </p>
             </div>
           </div>
