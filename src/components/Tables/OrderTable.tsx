@@ -110,9 +110,9 @@ const OrderTable = () => {
             </div>
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
-              <p className="font-medium text-dark dark:text-white">
+              
                 <MarketData />
-              </p>
+              
             </div>
           </div>
 

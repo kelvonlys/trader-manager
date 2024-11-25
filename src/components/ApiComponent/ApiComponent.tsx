@@ -1,11 +1,12 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import { formatNumber } from 'next/dist/lib/utils';
 
 export default function MarketData() {
   const [data, setData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [color, setColor] = useState('black')
+  const [color, setColor] = useState('text-black-500')
   const [previousValue, setPreviousValue] = useState(null)
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function MarketData() {
     }
 
     fetchData() // Initial fetch
-    const interval = setInterval(fetchData, 1000);
+    const interval = setInterval(fetchData, 100);
 
     return () => {
       clearInterval(interval);
@@ -39,28 +40,37 @@ export default function MarketData() {
   useEffect(() => {
     if (data && data.message !== null && previousValue !== null) {
       if (data.message > previousValue) {
-        setColor('blue')
+        setColor('text-blue-500')
       } else if (data.message < previousValue) {
-        setColor('red')
+        setColor('text-red-500')
       }
     }
     setPreviousValue(data?.message || null)
   }, [data])
 
-  if (isLoading) return <p>{previousValue}</p>
+  if (data === null) return <p>Loading Data...</p>
+  // if (isLoading) return <p>{previousValue}</p>
   if (error) return (
     <div>
       <p>Error: {error}</p>
     </div>
   )
 
+  const formatNum = addCommas(data.message)
+
   return (
     <div>
       {data && data.message && (
         <>
-          <p style={{ color }}>{data.message}</p>
+          
+          <p className={`${color} font-medium`}> {formatNum} </p>
         </>
       )}
     </div>
   )
+
+  function addCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+\b)/g, ",");
+  }
+
 }
