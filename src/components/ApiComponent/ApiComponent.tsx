@@ -5,6 +5,8 @@ export default function MarketData() {
   const [data, setData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [color, setColor] = useState('black')
+  const [previousValue, setPreviousValue] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,15 +29,25 @@ export default function MarketData() {
     }
 
     fetchData() // Initial fetch
-    const interval = setInterval(fetchData, 500);
+    const interval = setInterval(fetchData, 1000);
 
     return () => {
       clearInterval(interval);
     }
-
   }, [])
 
-  // if (isLoading) return <p>Loading market data...</p>
+  useEffect(() => {
+    if (data && data.message !== null && previousValue !== null) {
+      if (data.message > previousValue) {
+        setColor('blue')
+      } else if (data.message < previousValue) {
+        setColor('red')
+      }
+    }
+    setPreviousValue(data?.message || null)
+  }, [data])
+
+  if (isLoading) return <p>{previousValue}</p>
   if (error) return (
     <div>
       <p>Error: {error}</p>
@@ -44,7 +56,11 @@ export default function MarketData() {
 
   return (
     <div>
-      {data && data.message && <p>{data.message}</p>}
+      {data && data.message && (
+        <>
+          <p style={{ color }}>{data.message}</p>
+        </>
+      )}
     </div>
   )
 }
