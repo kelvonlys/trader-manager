@@ -15,6 +15,30 @@ const watchlistData: WATCHLIST[] = [
     ask: 2625.44,
     spread: 0.11,
   },
+  {
+    logoTop: "/images/instruments/eu.svg",
+    logoBottom: "/images/instruments/usd.svg",
+    pair: "EURUSD",
+    bid: 2625.34,
+    ask: 2625.44,
+    spread: 0.11,
+  },
+  // {
+  //   logoTop: "/images/instruments/xau.svg",
+  //   logoBottom: "/images/instruments/usd.svg",
+  //   pair: "XAUUSD",
+  //   bid: 2625.34,
+  //   ask: 2625.44,
+  //   spread: 0.11,
+  // },
+  // {
+  //   logoTop: "/images/instruments/btc.svg",
+  //   logoBottom: "/images/instruments/usd.svg",
+  //   pair: "BTCUSD",
+  //   bid: 2625.34,
+  //   ask: 2625.44,
+  //   spread: 0.11,
+  // },
   // Add more pairs as needed
 ];
 

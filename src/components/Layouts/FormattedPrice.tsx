@@ -15,7 +15,9 @@ const getPriceClass = (current: number, previous?: number | null): string => {
 };
 
 const addCommas = (number: number): string => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const parts = number.toString().split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join(".");
 };
 
 const FormattedPrice: React.FC<FormattedPriceProps> = ({ current, previous }) => {
