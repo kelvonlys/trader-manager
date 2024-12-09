@@ -19,44 +19,69 @@ interface WebSocketResponse {
   data: PriceData;
 }
 
-export const useWebSocket = (symbol: string | undefined) => {
+const RECONNECT_INTERVAL = 5000; // 10 seconds
+const MAX_RECONNECT_ATTEMPTS = 5;
+
+export function useWebSocket(symbol: string | undefined) {
   const [connection, setConnection] = useState<WebSocket | null>(null);
   const [priceData, setPriceData] = useState<PriceData | null>(null);
+  const [reconnectAttempts, setReconnectAttempts] = useState<number>(0);
 
   useEffect(() => {
-    if (!symbol) return;
+    let ws: WebSocket | null = null;
+    let reconnectTimer: NodeJS.Timeout | null = null;
 
-    const wsUrl = `ws://47.130.90.161:5000/ws/${symbol}`;
-    const ws = new WebSocket(wsUrl);
+    const connectWebSocket = () => {
+      if (!symbol) return;
 
-    ws.onopen = () => {
-      console.log('WebSocket connection established');
-      setConnection(ws);
+      ws = new WebSocket(`ws://47.130.90.161:5000/ws/${symbol}`);
+
+      ws.onopen = () => {
+        console.log('WebSocket connection established');
+        setConnection(ws);
+        setReconnectAttempts(0); // Reset attempts on successful connection
+      };
+
+      ws.onmessage = (event) => {
+        const data: WebSocketResponse = JSON.parse(event.data);
+        if (data.type === 'price') {
+          setPriceData(data.data);
+        }
+      };
+
+      ws.onerror = (error) => {
+        console.error('WebSocket Error:', error);
+        handleDisconnect();
+      };
+
+      ws.onclose = () => {
+        console.log('WebSocket Connection Closed');
+        setConnection(null);
+        setPriceData(null);
+        handleDisconnect();
+      };
     };
 
-    ws.onmessage = (event) => {
-      const data: WebSocketResponse = JSON.parse(event.data);
-      if (data.type === 'price') {
-        setPriceData(data.data);
+    const handleDisconnect = () => {
+      if (reconnectTimer) clearTimeout(reconnectTimer);
+      
+      if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+        setReconnectAttempts(prev => prev + 1);
+        reconnectTimer = setTimeout(connectWebSocket, RECONNECT_INTERVAL);
+      } else {
+        console.log('Max reconnection attempts reached. Giving up.');
       }
     };
 
-    ws.onerror = (error) => {
-      console.error('WebSocket Error:', error);
-    };
-
-    ws.onclose = () => {
-      console.log('WebSocket Connection Closed');
-      setConnection(null);
-      setPriceData(null);
-    };
+    connectWebSocket();
 
     return () => {
-      if (ws.readyState === WebSocket.OPEN) {
+      if (ws) {
         ws.close();
       }
+      if (reconnectTimer) clearTimeout(reconnectTimer);
     };
   }, [symbol]);
 
   return priceData;
-};
+}
