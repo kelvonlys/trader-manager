@@ -49,7 +49,6 @@ export default function MarketData() {
   }, [data])
 
   if (data === null) return <p>Loading Data...</p>
-  // if (isLoading) return <p>{previousValue}</p>
   if (error) return (
     <div>
       <p>Error: {error}</p>

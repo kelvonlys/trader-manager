@@ -111,7 +111,7 @@ const OrderTable = () => {
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
               
-                <MarketData />
+                {/* <MarketData /> */}
               
             </div>
           </div>
