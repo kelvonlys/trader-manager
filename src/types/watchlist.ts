@@ -5,4 +5,5 @@ export type WATCHLIST = {
   bid: number;
   ask: number;
   spread: number;
+  day_change_pct: any;
 };

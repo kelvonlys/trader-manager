@@ -8,7 +8,7 @@ export interface PriceData {
     last: any;
     volume: any;
     volume_real: any;
-    day_change_pct: string;
+    day_change_pct: any;
     spread: any;
     previous_bid: number;
     previous_ask: number;
