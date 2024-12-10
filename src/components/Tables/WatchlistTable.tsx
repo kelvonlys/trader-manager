@@ -34,7 +34,7 @@ const WatchlistTable = () => {
         Instrument
       </h4>
       <div className="flex flex-col mb-1.5">
-        <div className="grid grid-cols-3 md:grid-cols-6">
+        <div className="grid grid-cols-3 md:grid-cols-5 xl:grid-cols-6">
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Symbol
@@ -55,7 +55,7 @@ const WatchlistTable = () => {
               Spread
             </h5>
           </div>
-          <div className="hidden px-2 pb-3.5 text-center md:block">
+          <div className="hidden px-2 pb-3.5 text-center xl:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Change Percentage
             </h5>
@@ -82,64 +82,66 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
   const askClass = getPriceClass(priceData?.ask, priceData?.previous_ask);
 
   return (
-    <div className={`grid grid-cols-3 md:grid-cols-6 ${pair === watchlistData.length - 1 ? "" : "border-b border-stroke dark:border-dark-3"} hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
-      <div className="flex items-center gap-3.5 px-2 py-4 col-span-1">
-        <div className="flex-shrink-0 h-12 relative">
-          <Image
-            alt="First Symbol"
-            className="boxShadowWhite rounded-full"
-            src={pair.logoTop}
-            width={30}
-            height={30}
-          />
-          <Image
-            alt="Second Symbol"
-            className="transform translate-x-1/2 -translate-y-1/2 z-20 boxShadowWhite rounded-full"
-            src={pair.logoBottom}
-            width={30}
-            height={30}
-          />
+    <div className="py-0.5">
+      <div className={`grid grid-cols-3 md:grid-cols-5 xl:grid-cols-6 ${pair === watchlistData.length - 1 ? "" : "border-b border-stroke dark:border-dark-3"} hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
+        <div className="flex items-center gap-3.5 px-2 py-4 col-span-1.5">
+          <div className="flex-shrink-0 h-12 relative">
+            <Image
+              alt="First Symbol"
+              className="boxShadowWhite rounded-full"
+              src={pair.logoTop}
+              width={30}
+              height={30}
+            />
+            <Image
+              alt="Second Symbol"
+              className="transform translate-x-1/2 -translate-y-1/2 z-20 boxShadowWhite rounded-full"
+              src={pair.logoBottom}
+              width={30}
+              height={30}
+            />
+          </div>
+          <div className="ml-3 flex-grow w-[200px] min-w-0">
+            <p className="font-medium text-dark dark:text-white sm:block truncate">
+              Bitcoin to USD
+            </p>
+            <button disabled className="font-normal mt-1 px-2 py-1.5 text-xs bg-gray-700 text-white rounded-lg group-hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
+              {pair.pair}
+            </button>
+          </div>
         </div>
-        <div className="ml-3 flex-grow w-[200px] min-w-0">
-          <p className="font-medium text-dark dark:text-white sm:block truncate">
-            Bitcoin to USD
+        <div className="hidden items-center justify-center px-2 py-4 md:flex col-span-1">
+          <p className={`font-medium ${bidClass || 'text-dark dark:text-white'}`}>
+            <FormattedPrice current={priceData?.bid || pair.bid} previous={priceData?.previous_bid} />
           </p>
-          <button disabled className="font-normal mt-1 px-2 py-1.5 text-xs bg-gray-700 text-white rounded-lg group-hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
-            {pair.pair}
-          </button>
+          <div className="ml-1 font-thin text-xs text-dark dark:text-gray">USD</div>
+        </div>
+        <div className="hidden items-center justify-center px-2 py-4 md:flex col-span-1">
+          <p className={`font-medium ${askClass || 'text-dark dark:text-white'}`}>
+            <FormattedPrice current={priceData?.ask || pair.ask} previous={priceData?.previous_ask} />
+          </p>
+          <div className="ml-1 font-thin text-xs text-dark dark:text-gray">USD</div>
+        </div>
+        <div className="flex items-center justify-center px-2 py-4 col-span-1">
+          <p className="font-medium text-dark dark:text-white">
+            {priceData?.spread ?? pair.spread} 
+          </p>
+          <div className="ml-1 font-thin text-xs text-dark dark:text-gray">pips</div>
+        </div>
+        <div className={`
+          hidden items-center justify-center px-2 py-4 xl:flex col-span-1
+          ${getChangeColor(priceData?.day_change_pct || pair.day_change_pct)}`}>
+          {priceData?.day_change_pct || pair.day_change_pct} %
+        </div>
+        <div className="flex items-center justify-center px-2 py-4 col-span-1">
+          <ButtonDefault
+            label="Manage"
+            link="/"
+            customClasses="bg-blue-700 text-white px-10 py-3.5 text-xs sm:px-5"
+          />
         </div>
       </div>
-      <div className="hidden items-center justify-center px-2 py-4 md:flex col-span-1">
-        <p className={`font-medium ${bidClass || 'text-dark dark:text-white'}`}>
-          <FormattedPrice current={priceData?.bid || pair.bid} previous={priceData?.previous_bid} />
-        </p>
-        <div className="ml-1 font-thin text-xs text-dark dark:text-gray">USD</div>
       </div>
-      <div className="hidden items-center justify-center px-2 py-4 md:flex col-span-1">
-        <p className={`font-medium ${askClass || 'text-dark dark:text-white'}`}>
-          <FormattedPrice current={priceData?.ask || pair.ask} previous={priceData?.previous_ask} />
-        </p>
-        <div className="ml-1 font-thin text-xs text-dark dark:text-gray">USD</div>
-      </div>
-      <div className="flex items-center justify-center px-2 py-4 col-span-1">
-        <p className="font-medium text-dark dark:text-white">
-          {priceData?.spread ?? pair.spread} 
-        </p>
-        <div className="ml-1 font-thin text-xs text-dark dark:text-gray">pips</div>
-      </div>
-      <div className={`
-        hidden items-center justify-center px-2 py-4 md:flex col-span-1
-        ${getChangeColor(priceData?.day_change_pct || pair.day_change_pct)}`}>
-        {priceData?.day_change_pct || pair.day_change_pct} %
-      </div>
-      <div className="flex items-center justify-center px-2 py-4 col-span-1">
-        <ButtonDefault
-          label="Manage"
-          link="/"
-          customClasses="bg-blue-700 text-white px-10 py-3.5 lg:px-5 xl:px-5 text-xs"
-        />
-      </div>
-    </div>
   );
 };
 
