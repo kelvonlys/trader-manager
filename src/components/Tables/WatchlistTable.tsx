@@ -104,7 +104,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
           <p className="font-medium text-dark dark:text-white sm:block truncate">
             Bitcoin to USD
           </p>
-          <button className="font-normal mt-1 px-2 py-1.5 text-xs bg-gray-700 text-white rounded-lg group-hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
+          <button disabled className="font-normal mt-1 px-2 py-1.5 text-xs bg-gray-700 text-white rounded-lg group-hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
             {pair.pair}
           </button>
         </div>
@@ -123,8 +123,9 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
       </div>
       <div className="flex items-center justify-center px-2 py-4 col-span-1">
         <p className="font-medium text-dark dark:text-white">
-          {priceData?.spread || pair.spread} 
+          {priceData?.spread ?? pair.spread} 
         </p>
+        <div className="ml-1 font-thin text-xs text-dark dark:text-gray">pips</div>
       </div>
       <div className={`
         hidden items-center justify-center px-2 py-4 md:flex col-span-1
@@ -133,9 +134,9 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
       </div>
       <div className="flex items-center justify-center px-2 py-4 col-span-1">
         <ButtonDefault
-          label="Trade"
+          label="Manage"
           link="/"
-          customClasses="bg-blue-700 text-white px-10 py-3.5 lg:px-8 xl:px-10"
+          customClasses="bg-blue-700 text-white px-10 py-3.5 lg:px-5 xl:px-5 text-xs"
         />
       </div>
     </div>
