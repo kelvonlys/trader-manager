@@ -4,6 +4,9 @@ import Image from "next/image";
 import ButtonDefault from "@/components/Buttons/ButtonDefault";
 import { useWebSocket } from "@/lib/websocket";
 import FormattedPrice from "@/components/Layouts/FormattedPrice";
+import PopupBox from "@/components/Popup/BasicPopup"
+import { useState } from 'react';
+import { useEffect } from "react";
 
 const watchlistData: WATCHLIST[] = [
   {
@@ -71,15 +74,22 @@ const WatchlistTable = () => {
           <WatchlistRow key={key} pair={pair} />
         ))}
       </div>
+      
     </div>
+    
   );
 };
 
 const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
-  const priceData = useWebSocket(pair.pair);
-
+  // const priceData = useWebSocket(pair.pair);
+  const priceData = "test"
   const bidClass = getPriceClass(priceData?.bid, priceData?.previous_bid);
   const askClass = getPriceClass(priceData?.ask, priceData?.previous_ask);
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const openPopup = () => setIsPopupOpen(true);
+  const closePopup = () => setIsPopupOpen(false);
 
   return (
     <div className="py-0.5">
@@ -133,15 +143,20 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
           ${getChangeColor(priceData?.day_change_pct || pair.day_change_pct)}`}>
           {priceData?.day_change_pct || pair.day_change_pct} %
         </div>
+        
         <div className="flex items-center justify-center px-2 py-4 col-span-1">
           <ButtonDefault
             label="Manage"
-            link="/"
-            customClasses="bg-blue-700 text-white px-10 py-3.5 text-xs sm:px-5"
+            // onClick={() => { alert("Manage button clicked!"); }}
+            onClick={openPopup}
+            customClasses="bg-blue-700 text-white px-10 py-3 text-xs sm:px-4"
           />
+          <PopupBox isOpen={isPopupOpen} onClose={closePopup} />
         </div>
       </div>
-      </div>
+      
+    </div>
+    
   );
 };
 

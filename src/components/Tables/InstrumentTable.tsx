@@ -1,6 +1,10 @@
+'use client';
 import { INSTRUMENT } from "@/types/instrument";
 import Image from "next/image";
 import Link from 'next/link'; // Import Link component
+import ButtonDefault from "@/components/Buttons/ButtonDefault";
+import { useState } from "react";
+import PopupBox from "@/components/Popup/BasicPopup"
 
 const positionData: INSTRUMENT[] = [
   {
@@ -30,6 +34,10 @@ const positionData: INSTRUMENT[] = [
 ];
 
 const InstrutmentTable = () => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const openPopup = () => setIsPopupOpen(true);
+  const closePopup = () => setIsPopupOpen(false);
+
   return (
     <div className="rounded-[10px] bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
       <h4 className="mb-5.5 text-body-2xlg font-bold text-dark dark:text-white">
@@ -65,14 +73,13 @@ const InstrutmentTable = () => {
           </div>
           <div className="hidden px-2 pb-3.5 text-center sm:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Current Price
+              Profit
             </h5>
           </div>
           <div className="hidden px-2 pb-3.5 text-center sm:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Profit
+              Current Price
             </h5>
-            
           </div>
         </div>
 
@@ -111,12 +118,6 @@ const InstrutmentTable = () => {
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
               <p className="font-medium text-dark dark:text-white">
-                {position.currentPrice}
-              </p>
-            </div>
-
-            <div className="hidden items-center justify-center px-2 py-4 sm:flex">
-              <p className="font-medium text-dark dark:text-white">
                 {position.takeProfit}
               </p>
             </div>
@@ -127,6 +128,16 @@ const InstrutmentTable = () => {
               }>
                 {position.profit}
               </p>
+            </div>
+
+            <div className="hidden items-center justify-center px-2 py-4 sm:flex">
+              <ButtonDefault
+                label="Manage"
+                // onClick={() => { alert("Manage button clicked!"); }}
+                onClick={openPopup}
+                customClasses="bg-blue-700 text-white px-10 py-3 text-xs sm:px-4"
+              />
+              <PopupBox isOpen={isPopupOpen} onClose={closePopup} />
             </div>
           </div>
 

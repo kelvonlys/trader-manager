@@ -1,5 +1,3 @@
-// components/FormattedPrice.tsx
-
 import React from 'react';
 
 interface FormattedPriceProps {
