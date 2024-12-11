@@ -101,39 +101,21 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose }) => {
           </>
         )}
               
-        {/* Buy or Sell Side */}
+        {/* Buy or Sell Buttons */}
         <div className="mb-4">
           <label className="block mb-2 text-gray-500">Side *</label>
-          <div className="relative">
-            <select 
-              value={selectedSide}
-              onChange={(e) => setSelectedSide(e.target.value)}
-              className="block appearance-none w-full px-3 py-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-            >
-              <option value="buy">Buy</option>
-              <option value="sell">Sell</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
+          <div className="flex">
+            <ButtonDefault
+            label="Buy"
+            customClasses="w-1/2 bg-blue-700 text-white px-5 py-2.5 text-sm"
+            />
+            <ButtonDefault
+            label="Sell"
+            customClasses="w-1/2 bg-red-600 text-white px-5 py-2.5 text-sm"
+            />
           </div>
         </div>
-
-        {/* Bottom Row: Save and Cancel buttons */}
-        <div className="flex space-x-2">
-          <ButtonDefault
-            label="Close"
-            onClick={onClose}
-            customClasses="bg-gray-400 text-white px-5 py-2.5 text-sm"
-          />
-          <ButtonDefault
-            label="Save"
-            onClick={onClose}
-            customClasses="bg-blue-700 text-white px-4 py-2.5 text-sm"
-          />
-        </div>
+        
       </div>
     </div>
   );
