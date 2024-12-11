@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ButtonDefault from "@/components/Buttons/ButtonDefault";
 
-interface PopupBoxProps {
+interface TradePopupBoxProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const PopupBox: React.FC<PopupBoxProps> = ({ isOpen, onClose }) => {
+const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose }) => {
   const [isTakeProfitChecked, setIsTakeProfitChecked] = useState(true);
   const [isStopLossChecked, setIsStopLossChecked] = useState(true);
+  const [selectedSide, setSelectedSide] = useState('buy');
   const popupRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -43,6 +44,12 @@ const PopupBox: React.FC<PopupBoxProps> = ({ isOpen, onClose }) => {
           </button>
         </div>
         
+        {/* Position Size */}
+        <div className="mb-4">
+          <label className="block mb-2 text-gray-500">Position Size (Lots) *</label>
+          <input type="text" className="w-full px-3 py-3 border rounded-lg" placeholder="Enter Position Size" />
+        </div>
+
         {/* Take Profit Section */}
         <div className="mb-4">
           <label className="flex items-center">
@@ -70,7 +77,7 @@ const PopupBox: React.FC<PopupBoxProps> = ({ isOpen, onClose }) => {
         )}
 
         {/* Stop Loss Section */}
-         <div className="mb-4">
+        <div className="mb-4">
           <label className="flex items-center">
             <input 
               type="checkbox" 
@@ -84,7 +91,7 @@ const PopupBox: React.FC<PopupBoxProps> = ({ isOpen, onClose }) => {
 
         {isStopLossChecked && (
           <>
-            <div className="mb-4">
+            <div className="flex mb-4">
               <label className="block mb-2">Stop Loss</label>
             </div>
             <div className="flex mb-10 space-x-7">
@@ -93,6 +100,26 @@ const PopupBox: React.FC<PopupBoxProps> = ({ isOpen, onClose }) => {
             </div>
           </>
         )}
+              
+        {/* Buy or Sell Side */}
+        <div className="mb-4">
+          <label className="block mb-2 text-gray-500">Side *</label>
+          <div className="relative">
+            <select 
+              value={selectedSide}
+              onChange={(e) => setSelectedSide(e.target.value)}
+              className="block appearance-none w-full px-3 py-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+            >
+              <option value="buy">Buy</option>
+              <option value="sell">Sell</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </div>
 
         {/* Bottom Row: Save and Cancel buttons */}
         <div className="flex space-x-2">
@@ -112,4 +139,4 @@ const PopupBox: React.FC<PopupBoxProps> = ({ isOpen, onClose }) => {
   );
 };
 
-export default PopupBox;
+export default TradePopupBox;

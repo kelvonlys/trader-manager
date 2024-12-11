@@ -27,6 +27,24 @@ const watchlistData: WATCHLIST[] = [
     spread: 0.11,
     day_change_pct: 0.5,
   },
+  // {
+  //   logoTop: "/images/instruments/eu.svg",
+  //   logoBottom: "/images/instruments/usd.svg",
+  //   pair: "EURUSD",
+  //   bid: 2625.34,
+  //   ask: 2625.44,
+  //   spread: 0.11,
+  //   day_change_pct: 0.5,
+  // },
+  // {
+  //   logoTop: "/images/instruments/eu.svg",
+  //   logoBottom: "/images/instruments/usd.svg",
+  //   pair: "EURUSD",
+  //   bid: 2625.34,
+  //   ask: 2625.44,
+  //   spread: 0.11,
+  //   day_change_pct: 0.5,
+  // },
   // Add more pairs as needed
 ];
 
@@ -37,7 +55,7 @@ const WatchlistTable = () => {
         Instrument
       </h4>
       <div className="flex flex-col mb-1.5">
-        <div className="grid grid-cols-3 md:grid-cols-5 xl:grid-cols-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6">
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Symbol
@@ -53,7 +71,7 @@ const WatchlistTable = () => {
               Ask
             </h5>
           </div>
-          <div className="px-2 pb-3.5 text-center">
+          <div className="hidden px-2 pb-3.5 text-center md:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Spread
             </h5>
@@ -81,8 +99,8 @@ const WatchlistTable = () => {
 };
 
 const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
-  // const priceData = useWebSocket(pair.pair);
-  const priceData = "test"
+  const priceData = useWebSocket(pair.pair);
+  // const priceData = "test"
   const bidClass = getPriceClass(priceData?.bid, priceData?.previous_bid);
   const askClass = getPriceClass(priceData?.ask, priceData?.previous_ask);
 
@@ -93,7 +111,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
 
   return (
     <div className="py-0.5">
-      <div className={`grid grid-cols-3 md:grid-cols-5 xl:grid-cols-6 ${pair === watchlistData.length - 1 ? "" : "border-b border-stroke dark:border-dark-3"} hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
+      <div className={`grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6 ${pair === watchlistData.length - 1 ? "" : "border-b border-stroke dark:border-dark-3"} hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
         <div className="flex items-center gap-3.5 px-2 py-4 col-span-1.5">
           <div className="flex-shrink-0 h-12 relative">
             <Image
@@ -132,7 +150,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
           </p>
           <div className="ml-1 font-thin text-xs text-dark dark:text-gray">USD</div>
         </div>
-        <div className="flex items-center justify-center px-2 py-4 col-span-1">
+        <div className="hidden items-center justify-center px-2 py-4 md:flex col-span-1">
           <p className="font-medium text-dark dark:text-white">
             {priceData?.spread ?? pair.spread} 
           </p>

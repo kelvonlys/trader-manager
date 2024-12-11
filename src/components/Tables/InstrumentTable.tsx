@@ -4,7 +4,9 @@ import Image from "next/image";
 import Link from 'next/link'; // Import Link component
 import ButtonDefault from "@/components/Buttons/ButtonDefault";
 import { useState } from "react";
-import PopupBox from "@/components/Popup/BasicPopup"
+import PopupBox from "@/components/Popup/BasicPopup";
+import TradePopupBox from "@/components/Popup/TradePopup";
+
 
 const positionData: INSTRUMENT[] = [
   {
@@ -132,17 +134,16 @@ const InstrutmentTable = () => {
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
               <ButtonDefault
-                label="Manage"
+                label="Trade"
                 // onClick={() => { alert("Manage button clicked!"); }}
                 onClick={openPopup}
                 customClasses="bg-blue-700 text-white px-10 py-3 text-xs sm:px-4"
               />
-              <PopupBox isOpen={isPopupOpen} onClose={closePopup} />
             </div>
           </div>
-
-          
         ))}
+        
+              <TradePopupBox isOpen={isPopupOpen} onClose={closePopup} />
       </div>
     </div>
   );
