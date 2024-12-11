@@ -7,6 +7,7 @@ import FormattedPrice from "@/components/Layouts/FormattedPrice";
 import PopupBox from "@/components/Popup/BasicPopup"
 import { useState } from 'react';
 import { useEffect } from "react";
+import TradePopupBox from "@/components/Popup/TradePopup";
 
 const watchlistData: WATCHLIST[] = [
   {
@@ -55,7 +56,7 @@ const WatchlistTable = () => {
         Instrument
       </h4>
       <div className="flex flex-col mb-1.5">
-        <div className="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-7">
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Symbol
@@ -81,11 +82,6 @@ const WatchlistTable = () => {
               Change Percentage
             </h5>
           </div>
-          <div className="px-2 pb-3.5 text-center">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-
-            </h5>
-          </div>
         </div>
 
         {watchlistData.map((pair, key) => (
@@ -105,13 +101,17 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
   const askClass = getPriceClass(priceData?.ask, priceData?.previous_ask);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
   const openPopup = () => setIsPopupOpen(true);
   const closePopup = () => setIsPopupOpen(false);
 
+
+  const [isTradePopupOpen, setIsTradePopupOpen] = useState(false);
+  const openTradePopup = () => setIsTradePopupOpen(true);
+  const closeTradePopup = () => setIsTradePopupOpen(false);
+
   return (
     <div className="py-0.5">
-      <div className={`grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6 ${pair === watchlistData.length - 1 ? "" : "border-b border-stroke dark:border-dark-3"} hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
+      <div className={`grid grid-cols-2 md:grid-cols-5 xl:grid-cols-7 ${pair === watchlistData.length - 1 ? "" : "border-b border-stroke dark:border-dark-3"} hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
         <div className="flex items-center gap-3.5 px-2 py-4 col-span-1.5">
           <div className="flex-shrink-0 h-12 relative">
             <Image
@@ -170,6 +170,20 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
             customClasses="bg-blue-700 text-white px-10 py-3 text-xs sm:px-4"
           />
           <PopupBox isOpen={isPopupOpen} onClose={closePopup} />
+        </div>
+        <div className="flex items-center justify-center px-2 py-4 col-span-1">
+          <ButtonDefault
+            label="Trade"
+            // onClick={() => { alert("Manage button clicked!"); }}
+            onClick={openTradePopup}
+            customClasses="bg-blue-700 text-white px-10 py-3 text-xs sm:px-4"
+          />
+          <TradePopupBox
+            isOpen={isTradePopupOpen}
+            onClose={closeTradePopup}
+            bid={priceData?.bid}
+            ask={priceData?.ask}
+          />
         </div>
       </div>
       

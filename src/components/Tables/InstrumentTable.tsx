@@ -134,7 +134,7 @@ const InstrutmentTable = () => {
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
               <ButtonDefault
-                label="Trade"
+                label="Manage"
                 // onClick={() => { alert("Manage button clicked!"); }}
                 onClick={openPopup}
                 customClasses="bg-blue-700 text-white px-10 py-3 text-xs sm:px-4"
@@ -143,7 +143,7 @@ const InstrutmentTable = () => {
           </div>
         ))}
         
-              <TradePopupBox isOpen={isPopupOpen} onClose={closePopup} />
+              <PopupBox isOpen={isPopupOpen} onClose={closePopup} />
       </div>
     </div>
   );

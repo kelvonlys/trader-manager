@@ -104,7 +104,6 @@ const PopupBox: React.FC<PopupBoxProps> = ({ isOpen, onClose }) => {
               
         {/* Buy or Sell Buttons */}
         <div className="mb-1">
-          <label className="block mb-2 text-gray-400">Side *</label>
           <div className="flex space-x-0.5">
             <button
               className="w-full px-3 py-3 rounded-2xl bg-blue-700 text-gray-200 hover:bg-opacity-80"

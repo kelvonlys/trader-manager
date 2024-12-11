@@ -4,9 +4,11 @@ import ButtonDefault from "@/components/Buttons/ButtonDefault";
 interface TradePopupBoxProps {
   isOpen: boolean;
   onClose: () => void;
+  bid: number;
+  ask: number;
 }
 
-const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose }) => {
+const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, bid, ask }) => {
   const [isTakeProfitChecked, setIsTakeProfitChecked] = useState(true);
   const [isStopLossChecked, setIsStopLossChecked] = useState(true);
   const popupRef = useRef<HTMLDivElement>(null);
@@ -115,13 +117,13 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose }) => {
               className="w-1/2 px-3 py-2 rounded-l-2xl border-r-0 bg-blue-500 text-gray-200 hover:bg-blue-700"
             >
               <div>Buy</div>
-              <div>1.050309</div>
+              <div>{bid}</div>
             </button>
             <button
               className="w-1/2 px-3 py-2 rounded-r-2xl border-l-0 bg-red-400 text-gray-200 hover:bg-red-700"
             >
               <div>Sell</div>
-              <div>1.050309</div>
+              <div>{ask}</div>
             </button>
           </div>
         </div>
