@@ -52,9 +52,9 @@ const watchlistData: WATCHLIST[] = [
 const WatchlistTable = () => {
   return (
     <div className="rounded-xl bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
-      <h4 className="mb-5.5 text-body-2xlg font-bold text-dark dark:text-white">
+      <h5 className="mb-5.5 text-xl font-bold text-dark dark:text-white">
         Instrument
-      </h4>
+      </h5>
       <div className="flex flex-col mb-1.5">
         <div className="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-7">
           <div className="px-2 pb-3.5">
