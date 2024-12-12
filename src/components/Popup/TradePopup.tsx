@@ -4,8 +4,8 @@ import ButtonDefault from "@/components/Buttons/ButtonDefault";
 interface TradePopupBoxProps {
   isOpen: boolean;
   onClose: () => void;
-  bid: number;
-  ask: number;
+  bid?: number;
+  ask?: number;
 }
 
 const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, bid, ask }) => {

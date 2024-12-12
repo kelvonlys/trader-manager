@@ -111,7 +111,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
 
   return (
     <div className="py-0.5">
-      <div className={`grid grid-cols-2 md:grid-cols-5 xl:grid-cols-7 ${pair === watchlistData.length - 1 ? "" : "border-b border-stroke dark:border-dark-3"} hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
+      <div className={`grid grid-cols-2 md:grid-cols-5 xl:grid-cols-7 hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
         <div className="flex items-center gap-3.5 px-2 py-4 col-span-1.5">
           <div className="flex-shrink-0 h-12 relative">
             <Image
@@ -192,18 +192,18 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
   );
 };
 
-const getPriceClass = (current, previous) => {
-  if (previous === null || previous === undefined) {
+const getPriceClass = (current: number | undefined, previous: number | undefined): string => {
+  if (previous === null || previous === undefined || current === undefined) {
     return '';
   }
   return current > previous ? 'text-blue-500' : current < previous ? 'text-red-500' : '';
 };
 
-function addCommas(number) {
+function addCommas(number: { toString: () => string; }) {
   return number.toString().replace(/\B(?=(\d{3})+\b)/g, ",");
 }
 
-const getChangeColor = (value) => {
+const getChangeColor = (value: number) => {
   if (value > 0) {
     return 'text-blue-500';
   } else if (value < 0) {
