@@ -1,6 +1,5 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { formatNumber } from 'next/dist/lib/utils';
 
 export default function MarketData() {
   const [data, setData] = useState(null)
