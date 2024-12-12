@@ -1,7 +1,7 @@
 import { ORDER } from "@/types/order";
 import Image from "next/image";
 import Link from 'next/link'; // Import Link component
-import MarketData from "../ApiComponent/ApiComponent";
+// import MarketData from "../ApiComponent/ApiComponent";
 
 const orderData: ORDER[] = [
   {
