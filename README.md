@@ -1,6 +1,6 @@
 # Trader Manager
 
-A comprehensive trading infrastructure that connects traders with multiple broker platforms while providing flexible strategy execution capabilities.
+A comprehensive trading infrastructure that connects traders with multiple broker platforms while providing flexible strategy execution capabilities and real-time market data streaming.
 
 [![Watch the video](https://img.youtube.com/vi/b9g3ommfQa4/hqdefault.jpg)](https://www.youtube.com/watch?v=b9g3ommfQa4)
 
