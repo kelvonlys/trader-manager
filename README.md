@@ -3,6 +3,11 @@
 
 A comprehensive trading infrastructure built on AWS, connecting traders with multiple broker platforms while providing flexible strategy execution capabilities and real-time market data streaming.
 
+<a href="https://www.youtube.com/watch?v=M0GFd1Vqp_g">
+    <img width="400" alt="Trader_Manager_Your_Complete_Real_Time_Trading_Infrastructure" src="https://github.com/user-attachments/assets/971093ee-4b39-4f0d-ae99-4c7406208322">
+</a>
+
+
 ## Core Features
 ✨ Multi-broker connectivity supporting popular platforms like Metatrader and Ctrader
 📊 Position management interface for monitoring and controlling trades
