@@ -7,7 +7,7 @@ A comprehensive trading infrastructure that connects traders with multiple broke
 </a>
 
 <a href="https://www.youtube.com/watch?v=M0GFd1Vqp_g">
-    <img width="800" height="480" alt="Trader_Manager_Your_Complete_Real_Time_Trading_Infrastructure" src="https://github.com/user-attachments/assets/971093ee-4b39-4f0d-ae99-4c7406208322">
+    <img width="200" alt="Trader_Manager_Your_Complete_Real_Time_Trading_Infrastructure" src="https://github.com/user-attachments/assets/971093ee-4b39-4f0d-ae99-4c7406208322">
 </a>
 
 ## Core Features
