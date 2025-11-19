@@ -2,6 +2,8 @@
 
 A comprehensive trading infrastructure that connects traders with multiple broker platforms while providing flexible strategy execution capabilities.
 
+[![Watch the video](https://img.youtube.com/vi/b9g3ommfQa4/0.jpg)](https://www.youtube.com/watch?v=b9g3ommfQa4)
+
 ## Core Features
 
 * Multi-broker connectivity supporting popular platforms like Metatrader and Ctrader
