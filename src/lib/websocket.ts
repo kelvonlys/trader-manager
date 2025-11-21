@@ -34,7 +34,8 @@ export function useWebSocket(symbol: string | undefined) {
     const connectWebSocket = () => {
       if (!symbol) return;
 
-      ws = new WebSocket(`wss://47.130.90.161:5000/ws/${symbol}`);
+      // ws = new WebSocket(`wss://47.130.90.161:5000/ws/${symbol}`);
+      ws = new WebSocket(`ws://47.130.90.161:5000/ws/${symbol}`);
 
       ws.onopen = () => {
         console.log('WebSocket connection established');

@@ -10,45 +10,66 @@ import { useEffect } from "react";
 import TradePopupBox from "@/components/Popup/TradePopup";
 
 const watchlistData: WATCHLIST[] = [
+  // {
+  //   logoTop: "/images/instruments/au.svg",
+  //   logoBottom: "/images/instruments/usd.svg",
+  //   pair: "AUDUSD",
+  //   pairName: "AUD to USD",
+  //   bid: 0.6443,
+  //   ask: 0.6444,
+  //   spread: 0.01,
+  //   day_change_pct: 0.5,
+  // },
+  // {
+  //   logoTop: "/images/instruments/eu.svg",
+  //   logoBottom: "/images/instruments/usd.svg",
+  //   pair: "EURUSD",
+  //   pairName: "EUR to USD",
+  //   bid: 1.1539,
+  //   ask: 1.1539,
+  //   spread: 0.02,
+  //   day_change_pct: 0.15,
+  // },
   {
-    logoTop: "/images/instruments/au.svg",
-    logoBottom: "/images/instruments/usd.svg",
-    pair: "AUDUSD",
-    pairName: "Australian Dolloar To US Dollar",
-    bid: 0.6443,
-    ask: 0.6444,
-    spread: 0.01,
-    day_change_pct: 0.5,
-  },
-  {
-    logoTop: "/images/instruments/eu.svg",
-    logoBottom: "/images/instruments/usd.svg",
-    pair: "EURUSD",
-    pairName: "European Dolloar To US Dollar",
+    logoTop: "/images/instruments/usd.svg",
+    logoBottom: "/images/instruments/uj.svg",
+    pair: "USDJPY",
+    pairName: "USD to JPY",
     bid: 1.1539,
     ask: 1.1539,
     spread: 0.02,
+    day_change_pct: 0.35,
+  },
+  {
+    logoTop: "/images/instruments/usd.svg",
+    logoBottom: "/images/instruments/cad.svg",
+    pair: "USDCAD",
+    pairName: "USD to CAD",
+    bid: 1.1539,
+    ask: 1.1539,
+    spread: 0.03,
     day_change_pct: 0.2,
   },
   // {
-  //   logoTop: "/images/instruments/eu.svg",
+  //   logoTop: "/images/instruments/gu.svg",
   //   logoBottom: "/images/instruments/usd.svg",
-  //   pair: "EURUSD",
-  //   bid: 2625.34,
-  //   ask: 2625.44,
-  //   spread: 0.11,
-  //   day_change_pct: 0.5,
+  //   pair: "GBPUSD",
+  //   pairName: "GBP to USD",
+  //   bid: 1.30862,
+  //   ask: 1.30864,
+  //   spread: 0.01,
+  //   day_change_pct: 0.4,
   // },
   // {
-  //   logoTop: "/images/instruments/eu.svg",
-  //   logoBottom: "/images/instruments/usd.svg",
-  //   pair: "EURUSD",
-  //   bid: 2625.34,
-  //   ask: 2625.44,
-  //   spread: 0.11,
-  //   day_change_pct: 0.5,
+  //   logoTop: "/images/instruments/usd.svg",
+  //   logoBottom: "/images/instruments/chf.svg",
+  //   pair: "USDCHF",
+  //   pairName: "USD to CHF",
+  //   bid: 0.80442,
+  //   ask: 0.80453,
+  //   spread: 0.03,
+  //   day_change_pct: 0.2,
   // },
-  // Add more pairs as needed
 ];
 
 const WatchlistTable = () => {
@@ -58,7 +79,7 @@ const WatchlistTable = () => {
         Instrument
       </h5>
       <div className="flex flex-col mb-1.5">
-        <div className="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-7">
+        <div className="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6">
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Symbol
@@ -113,7 +134,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
 
   return (
     <div className="py-0.5">
-      <div className={`grid grid-cols-2 md:grid-cols-5 xl:grid-cols-7 hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
+      <div className={`grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6 hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
         <div className="flex items-center gap-3.5 px-2 py-4 col-span-1.5">
           <div className="flex-shrink-0 h-12 relative">
             <Image
@@ -183,6 +204,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
           <TradePopupBox
             isOpen={isTradePopupOpen}
             onClose={closeTradePopup}
+            symbol={pair.pair}
             bid={priceData?.bid}
             ask={priceData?.ask}
           />

@@ -4,14 +4,18 @@ import ButtonDefault from "@/components/Buttons/ButtonDefault";
 interface TradePopupBoxProps {
   isOpen: boolean;
   onClose: () => void;
+  symbol?: string;
   bid?: number;
   ask?: number;
 }
 
-const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, bid, ask }) => {
+const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol = "EURUSD", bid, ask }) => {
   const [isTakeProfitChecked, setIsTakeProfitChecked] = useState(true);
   const [isStopLossChecked, setIsStopLossChecked] = useState(true);
   const popupRef = useRef<HTMLDivElement>(null);
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleClickOutside = (event: MouseEvent) => {
     if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
@@ -32,6 +36,44 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, bid, ask
   }, [isOpen]);
 
   if (!isOpen) return null;
+
+  const executeTrade = async (side: "buy" | "sell") => {
+    if (loading) return;
+    setLoading(true);
+    setMessage('');
+
+    // Get the lots value from the input
+    const lotsInput = document.querySelector('input[placeholder="Enter Position Size"]') as HTMLInputElement;
+    const lots = parseFloat(lotsInput?.value || '0.01') || 0.01;
+
+    console.log(symbol, side, lots)
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trade`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          symbol: symbol,        
+          action: side,
+          volume: lots
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.detail || data.error || 'Trade failed');
+
+      setMessage('Order executed • Market filled');
+      setTimeout(() => {
+        onClose();
+      }, 1500);
+
+    } catch (err: any) {
+      setMessage(`Error: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-999">
@@ -114,23 +156,35 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, bid, ask
         <div className="mb-1">
           <div className="flex space-x-0.5">
             <button
-              className="w-1/2 px-3 py-2 rounded-l-2xl border-r-0 bg-red-400 text-gray-200 hover:bg-red-700"
+              onClick={() => executeTrade('sell')}
+              disabled={loading}
+              className="w-1/2 px-3 py-2 rounded-l-2xl border-r-0 bg-red-400 text-gray-200 hover:bg-red-700 disabled:opacity-50 transition"
             >
-              <div>Sell</div>
-              <div>{ask}</div>
+              <div>{loading ? 'Sending...' : 'Sell'}</div>
+              <div>{ask?.toFixed(5) ?? '-'}</div>
             </button>
+
             <button
-              className="w-1/2 px-3 py-2 rounded-r-2xl border-l-0 bg-blue-500 text-gray-200 hover:bg-blue-700"
+              onClick={() => executeTrade('buy')}
+              disabled={loading}
+              className="w-1/2 px-3 py-2 rounded-r-2xl border-l-0 bg-blue-500 text-gray-200 hover:bg-blue-700 disabled:opacity-50 transition"
             >
-              <div>Buy</div>
-              <div>{bid}</div>
+              <div>{loading ? 'Sending...' : 'Buy'}</div>
+              <div>{bid?.toFixed(5) ?? '-'}</div>
             </button>
             
           </div>
         </div>
+        {message && (
+          <div className={`text-center mt-6 text-lg font-bold ${message.includes('Error') || message.includes('failed') ? 'text-red-400' : 'text-gray-200'}`}>
+            {message}
+          </div>
+        )}
+
       </div>
     </div>
   );
 };
 
 export default TradePopupBox;
+
