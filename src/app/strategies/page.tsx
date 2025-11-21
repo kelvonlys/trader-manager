@@ -15,12 +15,8 @@ const TablesPage = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Strategy" />
-      <p>This is the strategy page</p>
-      <div className="flex flex-col gap-10">
-        <TableOne />
-        <TableTwo />
-        <TableThree />
-      </div>
+      <p>Coming Soon</p>
+
     </DefaultLayout>
   );
 };

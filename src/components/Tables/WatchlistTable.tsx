@@ -11,22 +11,24 @@ import TradePopupBox from "@/components/Popup/TradePopup";
 
 const watchlistData: WATCHLIST[] = [
   {
-    logoTop: "/images/instruments/btc.svg",
+    logoTop: "/images/instruments/au.svg",
     logoBottom: "/images/instruments/usd.svg",
-    pair: "BTCUSD",
-    bid: 2625.34,
-    ask: 2625.44,
-    spread: 0.11,
+    pair: "AUDUSD",
+    pairName: "Australian Dolloar To US Dollar",
+    bid: 0.6443,
+    ask: 0.6444,
+    spread: 0.01,
     day_change_pct: 0.5,
   },
   {
     logoTop: "/images/instruments/eu.svg",
     logoBottom: "/images/instruments/usd.svg",
     pair: "EURUSD",
-    bid: 2625.34,
-    ask: 2625.44,
-    spread: 0.11,
-    day_change_pct: 0.5,
+    pairName: "European Dolloar To US Dollar",
+    bid: 1.1539,
+    ask: 1.1539,
+    spread: 0.02,
+    day_change_pct: 0.2,
   },
   // {
   //   logoTop: "/images/instruments/eu.svg",
@@ -131,7 +133,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
           </div>
           <div className="ml-3 flex-grow w-[200px] min-w-0">
             <p className="font-medium text-dark dark:text-white sm:block truncate">
-              Bitcoin to USD
+              {pair.pairName}
             </p>
             <button disabled className="font-normal mt-1 px-2 py-1.5 text-xs bg-gray-700 text-white rounded-lg group-hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
               {pair.pair}
@@ -162,7 +164,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
           {priceData?.day_change_pct || pair.day_change_pct} %
         </div>
         
-        <div className="flex items-center justify-center px-2 py-4 col-span-1">
+        {/* <div className="flex items-center justify-center px-2 py-4 col-span-1">
           <ButtonDefault
             label="Manage"
             // onClick={() => { alert("Manage button clicked!"); }}
@@ -170,7 +172,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
             customClasses="bg-blue-700 text-white px-10 py-3 text-xs sm:px-4"
           />
           <PopupBox isOpen={isPopupOpen} onClose={closePopup} />
-        </div>
+        </div> */}
         <div className="flex items-center justify-center px-2 py-4 col-span-1">
           <ButtonDefault
             label="Trade"
