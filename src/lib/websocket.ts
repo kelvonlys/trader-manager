@@ -35,7 +35,7 @@ export function useWebSocket(symbol: string | undefined) {
       if (!symbol) return;
 
       // ws = new WebSocket(`wss://47.130.90.161:5000/ws/${symbol}`);
-      ws = new WebSocket(`wss://ws.fitopts.com/ws/${symbol}`);
+      ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/${symbol}`);
       
       ws.onopen = () => {
         console.log('WebSocket connection established');
