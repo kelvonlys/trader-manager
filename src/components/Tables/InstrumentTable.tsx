@@ -72,6 +72,36 @@ const InstrutmentTable = () => {
     );
   }
 
+  const closePosition = async (ticket: number) => {
+    if (!confirm(`Close ticket #${ticket}?`)) return;
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/close/${ticket}`, {
+        method: "POST",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.detail || data.message || "Close failed");
+      }
+
+      // Success → show message
+      alert(`Ticket #${ticket} closed successfully\nProfit: ${data.profit?.toFixed(2) || 'N/A'} USD`);
+
+      // Force refresh the entire positions list from server
+      const refreshRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/open-positions`);
+      const refreshData = await refreshRes.json();
+
+      if (refreshData.status === "success") {
+        setPositions(refreshData.positions);
+      }
+
+    } catch (err: any) {
+      alert(`Failed to close #${ticket}\n${err.message}`);
+    }
+  };
+
   return (
     <div className="rounded-[10px] bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
       <h4 className="mb-5.5 text-xl font-bold text-dark dark:text-white">
@@ -163,9 +193,10 @@ const InstrutmentTable = () => {
 
               <div className="hidden items-center justify-center px-2 py-4 sm:flex">
                 <ButtonDefault
-                  label="Manage"
-                  onClick={openPopup}
-                  customClasses="bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 text-xs rounded"
+                  label="Close"
+                  onClick={() => closePosition(position.position_id)}
+                  // onClick={openPopup}
+                  customClasses="bg-blue-700 hover:bg-blue-800 text-white px-4 py-3 text-xs rounded"
                 />
               </div>
             </div>
