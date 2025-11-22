@@ -173,7 +173,6 @@ const InstrutmentTable = () => {
         )}
       </div>
 
-      {/* Reuse your existing popup */}
       <PopupBox isOpen={isPopupOpen} onClose={closePopup}>
         <div className="p-6">
           <h3 className="text-xl font-bold mb-4">Manage Position</h3>

@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import ButtonDefault from "@/components/Buttons/ButtonDefault";
 
 interface PopupBoxProps {
   isOpen: boolean;
   onClose: () => void;
+  children?: ReactNode;
 }
 
 const PopupBox: React.FC<PopupBoxProps> = ({ isOpen, onClose }) => {
