@@ -22,6 +22,16 @@ const watchlistData: WATCHLIST[] = [
     day_change_pct: 0.4,
   },
   {
+    logoTop: "/images/instruments/eth.svg",
+    logoBottom: "/images/instruments/usd.svg",
+    pair: "ETHUSD",
+    pairName: "ETH to USD",
+    bid: 1.30862,
+    ask: 1.30864,
+    spread: 0.01,
+    day_change_pct: 0.4,
+  },
+  {
     logoTop: "/images/instruments/au.svg",
     logoBottom: "/images/instruments/usd.svg",
     pair: "AUDUSD",
@@ -122,7 +132,6 @@ const WatchlistTable = () => {
           <WatchlistRow key={key} pair={pair} />
         ))}
       </div>
-      
     </div>
     
   );
