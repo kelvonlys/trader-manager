@@ -161,7 +161,7 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
               className="w-1/2 px-3 py-2 rounded-l-2xl border-r-0 bg-red-400 text-gray-200 hover:bg-red-700 disabled:opacity-50 transition"
             >
               <div>{loading ? 'Sending...' : 'Sell'}</div>
-              <div>{ask?.toFixed(5) ?? '-'}</div>
+              <div>{ask ?? '-'}</div>
             </button>
 
             <button
@@ -170,7 +170,7 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
               className="w-1/2 px-3 py-2 rounded-r-2xl border-l-0 bg-blue-500 text-gray-200 hover:bg-blue-700 disabled:opacity-50 transition"
             >
               <div>{loading ? 'Sending...' : 'Buy'}</div>
-              <div>{bid?.toFixed(5) ?? '-'}</div>
+              <div>{bid ?? '-'}</div>
             </button>
             
           </div>

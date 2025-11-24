@@ -4,7 +4,6 @@ import ButtonDefault from "@/components/Buttons/ButtonDefault";
 import PopupBox from "@/components/Popup/BasicPopup";
 import { useState, useEffect } from "react";
 
-// Define the real shape from your FastAPI
 type Position = {
   position_id: number;
   symbol: string;
@@ -16,6 +15,7 @@ type Position = {
   volume: number;
   type: "buy" | "sell";
   time: number;
+  digits: number;
 };
 
 const InstrutmentTable = () => {
@@ -24,19 +24,13 @@ const InstrutmentTable = () => {
   const [error, setError] = useState<string | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const openPopup = () => setIsPopupOpen(true);
-  const closePopup = () => setIsPopupOpen(false);
-
-  // Fetch open positions on mount
+  // Fetch positions + refresh every 1 second for live P&L
   useEffect(() => {
     const fetchPositions = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/open-positions`);
-        
         if (!res.ok) throw new Error("Failed to fetch positions");
-
         const data = await res.json();
-
         if (data.status === "success") {
           setPositions(data.positions);
         } else {
@@ -50,8 +44,40 @@ const InstrutmentTable = () => {
       }
     };
 
+    // First load
     fetchPositions();
+
+    // Then every 1 second → floating P&L
+    const interval = setInterval(fetchPositions, 1000);
+
+    return () => clearInterval(interval);
   }, []);
+
+  const closePosition = async (ticket: number) => {
+    if (!confirm(`Close ticket #${ticket}?`)) return;
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/close/${ticket}`, {
+        method: "POST",
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.detail || data.message || "Close failed");
+      }
+
+      alert(`Ticket #${ticket} closed successfully\nProfit: ${data.profit?.toFixed(2) || 'N/A'} USD`);
+
+      // Immediate refresh after close
+      const refreshRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/open-positions`);
+      const refreshData = await refreshRes.json();
+      if (refreshData.status === "success") {
+        setPositions(refreshData.positions);
+      }
+    } catch (err: any) {
+      alert(`Failed to close #${ticket}\n${err.message}`);
+    }
+  };
 
   if (loading) {
     return (
@@ -66,41 +92,11 @@ const InstrutmentTable = () => {
       <div className="rounded-[10px] bg-white px-7.5 py-10 shadow-1 dark:bg-gray-dark text-center">
         <p className="text-red-500 font-medium">Error: {error}</p>
         <p className="text-sm text-gray-500 mt-2">
-          Make sure your FastAPI server is running on port 5000
+          Make sure your FastAPI server is running
         </p>
       </div>
     );
   }
-
-  const closePosition = async (ticket: number) => {
-    if (!confirm(`Close ticket #${ticket}?`)) return;
-
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/close/${ticket}`, {
-        method: "POST",
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.detail || data.message || "Close failed");
-      }
-
-      // Success → show message
-      alert(`Ticket #${ticket} closed successfully\nProfit: ${data.profit?.toFixed(2) || 'N/A'} USD`);
-
-      // Force refresh the entire positions list from server
-      const refreshRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/open-positions`);
-      const refreshData = await refreshRes.json();
-
-      if (refreshData.status === "success") {
-        setPositions(refreshData.positions);
-      }
-
-    } catch (err: any) {
-      alert(`Failed to close #${ticket}\n${err.message}`);
-    }
-  };
 
   return (
     <div className="rounded-[10px] bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -163,31 +159,29 @@ const InstrutmentTable = () => {
 
               <div className="flex items-center justify-center px-2 py-4">
                 <p className="font-medium text-dark dark:text-white">
-                  {position.price_open.toFixed(
-                    position.symbol.includes("JPY") ? 3 : 5
-                  )}
+                  {position.price_open}
                 </p>
               </div>
 
               <div className="hidden items-center justify-center px-2 py-4 sm:flex">
                 <p className="font-medium text-dark dark:text-white">
-                  {position.stop_loss === 0 ? "-" : position.stop_loss.toFixed(5)}
+                  {position.stop_loss === 0 ? "-" : position.stop_loss}
                 </p>
               </div>
 
               <div className="hidden items-center justify-center px-2 py-4 sm:flex">
                 <p className="font-medium text-dark dark:text-white">
-                  {position.take_profit === 0 ? "-" : position.take_profit.toFixed(5)}
+                  {position.take_profit === 0 ? "-" : position.take_profit}
                 </p>
               </div>
 
               <div className="hidden items-center justify-center px-2 py-4 sm:flex">
                 <p
-                  className={`font-bold text-lg ${
+                  className={` ${
                     position.profit >= 0 ? "text-blue-500" : "text-red-500"
                   }`}
                 >
-                  {position.profit >= 0 ? "+" : ""}{position.profit.toFixed(2)}
+                  {position.profit >= 0 ? "+" : ""}{position.profit}
                 </p>
               </div>
 
@@ -195,7 +189,6 @@ const InstrutmentTable = () => {
                 <ButtonDefault
                   label="Close"
                   onClick={() => closePosition(position.position_id)}
-                  // onClick={openPopup}
                   customClasses="bg-blue-700 hover:bg-blue-800 text-white px-4 py-3 text-xs rounded"
                 />
               </div>
@@ -204,7 +197,7 @@ const InstrutmentTable = () => {
         )}
       </div>
 
-      <PopupBox isOpen={isPopupOpen} onClose={closePopup}>
+      <PopupBox isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
         <div className="p-6">
           <h3 className="text-xl font-bold mb-4">Manage Position</h3>
           <p className="text-sm text-gray-600">
