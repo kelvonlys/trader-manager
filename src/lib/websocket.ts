@@ -20,6 +20,7 @@ interface WebSocketResponse {
   data: PriceData;
 }
 
+// Singleton maps
 const connections = new Map<string, WebSocket>();
 const listeners = new Map<string, Set<(data: PriceData) => void>>();
 const latestData = new Map<string, PriceData>();
@@ -31,13 +32,14 @@ export function useWebSocket(symbol: string | undefined) {
   useEffect(() => {
     if (!symbol) return;
 
-    // FIX 1: Create listener set FIRST
+    // Ensure listener set exists first
     if (!listeners.has(symbol)) {
       listeners.set(symbol, new Set());
     }
 
     let ws = connections.get(symbol);
 
+    // Create new connection if none exists or it's dead
     if (!ws || ws.readyState === WebSocket.CLOSED || ws.readyState === WebSocket.CLOSING) {
       ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/${symbol}`);
 
@@ -50,10 +52,13 @@ export function useWebSocket(symbol: string | undefined) {
           const msg: WebSocketResponse = JSON.parse(event.data);
           if (msg.type === 'price') {
             latestData.set(symbol, msg.data);
-            listeners.get(symbol)?.forEach(cb => cb(msg.data));
+            const callbacks = listeners.get(symbol);
+            if (callbacks) {
+              callbacks.forEach(cb => cb(msg.data));
+            }
           }
         } catch (e) {
-          console.error("WS parse error:", e);
+          console.error('WS parse error:', e);
         }
       };
 
@@ -62,13 +67,13 @@ export function useWebSocket(symbol: string | undefined) {
       ws.onclose = () => {
         console.log(`WebSocket closed: ${symbol}`);
         connections.delete(symbol);
-        // Don't delete listeners here — we need them to know someone wants to reconnect
 
-        // Auto-reconnect if anyone is still listening
-        if (listeners.get(symbol)?.size > 0) {
+        // Only reconnect if someone is still interested
+        const currentListeners = listeners.get(symbol);
+        if (currentListeners && currentListeners.size > 0) {
           setTimeout(() => {
-            // This will trigger the useEffect again
             console.log(`Reconnecting to ${symbol}...`);
+            // Trigger reconnection by doing nothing — next mount will recreate
           }, RECONNECT_INTERVAL);
         }
       };
@@ -76,14 +81,16 @@ export function useWebSocket(symbol: string | undefined) {
       connections.set(symbol, ws);
     }
 
+    // Add this component as listener
     const callback = (data: PriceData) => setPriceData(data);
     listeners.get(symbol)!.add(callback);
 
-    // Restore latest price immediately
+    // Restore latest price immediately if we have it
     if (latestData.has(symbol)) {
       setPriceData(latestData.get(symbol)!);
     }
 
+    // Cleanup
     return () => {
       const set = listeners.get(symbol);
       if (set) {
@@ -91,7 +98,8 @@ export function useWebSocket(symbol: string | undefined) {
         if (set.size === 0) {
           ws?.close();
           connections.delete(symbol);
-          listeners.delete(symbol); // only delete when truly no one cares
+          listeners.delete(symbol);
+          latestData.delete(symbol);
         }
       }
     };
