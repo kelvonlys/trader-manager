@@ -3,7 +3,10 @@
 
 A comprehensive trading infrastructure built on AWS, connecting traders with multiple broker platforms while providing flexible strategy execution capabilities and real-time market data streaming.
 
-<a href="https://www.youtube.com/watch?v=M0GFd1Vqp_g">
+<img width="1852" height="1232" alt="Screenshot 2025-11-24 at 10 13 03 AM" src="https://github.com/user-attachments/assets/295d3ae8-f3f9-40b0-b6aa-69fc8eec5277" />
+
+
+<a href="https://trader-manager.vercel.app">
     <img width="400" alt="Trader_Manager_Your_Complete_Real_Time_Trading_Infrastructure" src="https://github.com/user-attachments/assets/971093ee-4b39-4f0d-ae99-4c7406208322">
 </a>
 
