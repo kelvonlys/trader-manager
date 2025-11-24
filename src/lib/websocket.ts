@@ -1,17 +1,18 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 
 export interface PriceData {
-    time: number;
-    bid: number;
-    ask: number;
-    last: any;
-    volume: any;
-    volume_real: any;
-    day_change_pct: any;
-    spread: any;
-    previous_bid: number;
-    previous_ask: number;
+  time: number;
+  bid: number;
+  ask: number;
+  last: any;
+  volume: any;
+  volume_real: any;
+  day_change_pct: any;
+  spread: any;
+  previous_bid: number;
+  previous_ask: number;
 }
 
 interface WebSocketResponse {
@@ -19,68 +20,80 @@ interface WebSocketResponse {
   data: PriceData;
 }
 
-const RECONNECT_INTERVAL = 5000; // 10 seconds
-const MAX_RECONNECT_ATTEMPTS = 5;
+const connections = new Map<string, WebSocket>();
+const listeners = new Map<string, Set<(data: PriceData) => void>>();
+const latestData = new Map<string, PriceData>();
+const RECONNECT_INTERVAL = 3000;
 
 export function useWebSocket(symbol: string | undefined) {
-  const [connection, setConnection] = useState<WebSocket | null>(null);
   const [priceData, setPriceData] = useState<PriceData | null>(null);
-  const [reconnectAttempts, setReconnectAttempts] = useState<number>(0);
 
   useEffect(() => {
-    let ws: WebSocket | null = null;
-    let reconnectTimer: NodeJS.Timeout | null = null;
+    if (!symbol) return;
 
-    const connectWebSocket = () => {
-      if (!symbol) return;
+    // FIX 1: Create listener set FIRST
+    if (!listeners.has(symbol)) {
+      listeners.set(symbol, new Set());
+    }
 
-      // ws = new WebSocket(`wss://47.130.90.161:5000/ws/${symbol}`);
+    let ws = connections.get(symbol);
+
+    if (!ws || ws.readyState === WebSocket.CLOSED || ws.readyState === WebSocket.CLOSING) {
       ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/${symbol}`);
-      
+
       ws.onopen = () => {
-        console.log('WebSocket connection established');
-        setConnection(ws);
-        setReconnectAttempts(0); // Reset attempts on successful connection
+        console.log(`WebSocket connected: ${symbol}`);
       };
 
       ws.onmessage = (event) => {
-        const data: WebSocketResponse = JSON.parse(event.data);
-        if (data.type === 'price') {
-          setPriceData(data.data);
+        try {
+          const msg: WebSocketResponse = JSON.parse(event.data);
+          if (msg.type === 'price') {
+            latestData.set(symbol, msg.data);
+            listeners.get(symbol)?.forEach(cb => cb(msg.data));
+          }
+        } catch (e) {
+          console.error("WS parse error:", e);
         }
       };
 
-      ws.onerror = (error) => {
-        console.error('WebSocket Error:', error);
-        handleDisconnect();
-      };
+      ws.onerror = () => console.error(`WS error: ${symbol}`);
 
       ws.onclose = () => {
-        console.log('WebSocket Connection Closed');
-        setConnection(null);
-        setPriceData(null);
-        handleDisconnect();
+        console.log(`WebSocket closed: ${symbol}`);
+        connections.delete(symbol);
+        // Don't delete listeners here — we need them to know someone wants to reconnect
+
+        // Auto-reconnect if anyone is still listening
+        if (listeners.get(symbol)?.size > 0) {
+          setTimeout(() => {
+            // This will trigger the useEffect again
+            console.log(`Reconnecting to ${symbol}...`);
+          }, RECONNECT_INTERVAL);
+        }
       };
-    };
 
-    const handleDisconnect = () => {
-      if (reconnectTimer) clearTimeout(reconnectTimer);
-      
-      if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
-        setReconnectAttempts(prev => prev + 1);
-        reconnectTimer = setTimeout(connectWebSocket, RECONNECT_INTERVAL);
-      } else {
-        console.log('Max reconnection attempts reached. Giving up.');
-      }
-    };
+      connections.set(symbol, ws);
+    }
 
-    connectWebSocket();
+    const callback = (data: PriceData) => setPriceData(data);
+    listeners.get(symbol)!.add(callback);
+
+    // Restore latest price immediately
+    if (latestData.has(symbol)) {
+      setPriceData(latestData.get(symbol)!);
+    }
 
     return () => {
-      if (ws) {
-        ws.close();
+      const set = listeners.get(symbol);
+      if (set) {
+        set.delete(callback);
+        if (set.size === 0) {
+          ws?.close();
+          connections.delete(symbol);
+          listeners.delete(symbol); // only delete when truly no one cares
+        }
       }
-      if (reconnectTimer) clearTimeout(reconnectTimer);
     };
   }, [symbol]);
 
