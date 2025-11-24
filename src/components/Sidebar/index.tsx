@@ -17,6 +17,19 @@ const menuGroups = [
   {
     name: "MAIN MENU",
     menuItems: [
+    // {
+    //     icon: (
+    //       <Image
+    //         src="/images/instruments/account-balance.svg"
+    //         alt="Account Balance"
+    //         width={28}
+    //         height={28}
+    //         className="fill-current"
+    //       />
+    //     ),
+    //     label: "Account Balance",
+    //     route: "/profile",
+    //   },
       {
         icon: (
           <Image

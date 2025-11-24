@@ -34,8 +34,9 @@ const OrderTable = () => {
       <h4 className="mb-5.5 text-body-2xlg font-bold text-dark dark:text-white">
         Pending Order
       </h4>
+      <p className="pb-4">There is no pending order</p>
 
-      <div className="flex flex-col">
+      {/* <div className="flex flex-col">
         <div className="grid grid-cols-3 sm:grid-cols-6">
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
@@ -110,15 +111,13 @@ const OrderTable = () => {
             </div>
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
-              
-                {/* <MarketData /> */}
-              
+       
             </div>
           </div>
 
           
-        ))}
-      </div>
+        ))} 
+      </div>*/}
     </div>
   );
 };

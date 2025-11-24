@@ -101,7 +101,7 @@ const InstrutmentTable = () => {
   return (
     <div className="rounded-[10px] bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
       <h4 className="mb-5.5 text-xl font-bold text-dark dark:text-white">
-        Current Position ({positions.length})
+        Current Position
       </h4>
 
       <div className="flex flex-col">
@@ -110,11 +110,11 @@ const InstrutmentTable = () => {
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">Symbol</h5>
           </div>
-          <div className="px-2 pb-3.5 text-center">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">Type</h5>
+          <div className="hidden px-2 pb-3.5 text-center sm:block">
+            <h5 className="text-sm font-medium uppercase xsm:text-base sm:block">Type</h5>
           </div>
           <div className="px-2 pb-3.5 text-center">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">Entry Price</h5>
+            <h5 className="text-sm font-medium uppercase xsm:text-base sm:block">Entry Price</h5>
           </div>
           <div className="hidden px-2 pb-3.5 text-center sm:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">S/L</h5>
@@ -125,20 +125,20 @@ const InstrutmentTable = () => {
           <div className="hidden px-2 pb-3.5 text-center sm:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">Profit</h5>
           </div>
-          <div className="hidden px-2 pb-3.5 text-center sm:block">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">Action</h5>
+          <div className=" px-2 pb-3.5 text-center">
+            <h5 className="text-sm font-medium uppercase xsm:text-base"></h5>
           </div>
         </div>
 
         {/* Rows */}
         {positions.length === 0 ? (
-          <div className="py-10 text-center text-gray-500">
+          <div className="py-10 text-center text-gray-500 ">
             No open positions
           </div>
         ) : (
           positions.map((position, key) => (
             <div
-              className={`grid grid-cols-3 sm:grid-cols-7 ${
+              className={`grid grid-cols-3 sm:grid-cols-7 hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg hover:-translate-y-1 transition-all duration-300${
                 key === positions.length - 1
                   ? ""
                   : "border-b border-stroke dark:border-dark-3"
@@ -151,7 +151,7 @@ const InstrutmentTable = () => {
                 </p>
               </div>
 
-              <div className="flex items-center justify-center px-2 py-4">
+              <div className="hidden flex items-center justify-center px-2 py-4  sm:flex">
                 <p className="font-medium text-dark dark:text-white">
                   {position.type.toUpperCase()}
                 </p>
@@ -163,13 +163,13 @@ const InstrutmentTable = () => {
                 </p>
               </div>
 
-              <div className="hidden items-center justify-center px-2 py-4 sm:flex">
+              <div className="hidden items-center justify-center px-2 py-4  sm:flex">
                 <p className="font-medium text-dark dark:text-white">
                   {position.stop_loss === 0 ? "-" : position.stop_loss}
                 </p>
               </div>
 
-              <div className="hidden items-center justify-center px-2 py-4 sm:flex">
+              <div className="hidden items-center justify-center px-2 py-4  sm:flex">
                 <p className="font-medium text-dark dark:text-white">
                   {position.take_profit === 0 ? "-" : position.take_profit}
                 </p>
@@ -185,7 +185,7 @@ const InstrutmentTable = () => {
                 </p>
               </div>
 
-              <div className="hidden items-center justify-center px-2 py-4 sm:flex">
+              <div className="flex items-center justify-center px-2 py-4 col-span-1">
                 <ButtonDefault
                   label="Close"
                   onClick={() => closePosition(position.position_id)}
