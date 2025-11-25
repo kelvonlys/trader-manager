@@ -58,8 +58,6 @@ export default function TradingviewChartPage() {
           symbol={urlSymbol}
           bid={priceData.bid}
           ask={priceData.ask}
-          defaultSide={tradeSide}
-          defaultVolume={tradeVolume}
         />
       </div>
     </DefaultLayout>
