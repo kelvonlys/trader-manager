@@ -223,7 +223,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
           />
           <PopupBox isOpen={isPopupOpen} onClose={closePopup} /> */}
         </div>
-        <div className="hidden flex items-center justify-center px-2 py-4 col-span-1 md:flex">
+        <div className="hidden flex items-center justify-center px-2 py-4 col-span-1 xl:flex">
           <ButtonDefault
             label="Trade"
             // onClick={() => { alert("Manage button clicked!"); }}
