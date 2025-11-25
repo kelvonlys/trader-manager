@@ -31,7 +31,7 @@ const DataStatsOne: React.FC = () => {
     };
 
     fetchAccount();
-    const interval = setInterval(fetchAccount, 1000);
+    const interval = setInterval(fetchAccount, 2000);
     return () => clearInterval(interval);
   }, []);
 
@@ -51,7 +51,7 @@ const DataStatsOne: React.FC = () => {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3 xl:grid-cols-3 2xl:gap-7.5">
 
         {/* 1. Total Balance (steady) */}
-        <div className="rounded-[10px] bg-white p-6 shadow-1 dark:bg-gray-dark hover:bg-gray-100 dark:hover:bg-gray-700 hover:-translate-y-1 transition-all">
+        <div className="rounded-[10px] bg-white p-6 shadow-1 dark:bg-gray-dark hover:bg-gray-100 dark:hover:bg-gray-700">
           <div className="flex items-end justify-between">
             <div>
               <span className="text-body-sm font-medium text-gray-600 dark:text-gray-400">Total Balance (USD)</span>
@@ -64,7 +64,7 @@ const DataStatsOne: React.FC = () => {
         </div>
 
         {/* 2. Equity (dances live) */}
-        <div className="rounded-[10px] bg-white p-6 shadow-1 dark:bg-gray-dark hover:bg-gray-100 dark:hover:bg-gray-700 hover:-translate-y-1 transition-all">
+        <div className="rounded-[10px] bg-white p-6 shadow-1 dark:bg-gray-dark hover:bg-gray-100 dark:hover:bg-gray-700">
           <div className="flex items-end justify-between">
             <div>
               <span className="text-body-sm font-medium text-gray-600 dark:text-gray-400">Equity (USD)</span>
@@ -79,7 +79,7 @@ const DataStatsOne: React.FC = () => {
         </div>
 
         {/* 3. Floating Profit */}
-        <div className="rounded-[10px] bg-white p-6 shadow-1 dark:bg-gray-dark hover:bg-gray-100 dark:hover:bg-gray-700 hover:-translate-y-1 transition-all">
+        <div className="rounded-[10px] bg-white p-6 shadow-1 dark:bg-gray-dark hover:bg-gray-100 dark:hover:bg-gray-700">
           <div className="flex items-end justify-between">
             <div>
               <span className="text-body-sm font-medium text-gray-600 dark:text-gray-400">Floating P&L (USD)</span>

@@ -97,7 +97,7 @@ const WatchlistTable = () => {
   return (
     <div className="rounded-xl bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
       <h5 className="mb-5.5 text-xl font-bold text-dark dark:text-white">
-        Instrument
+        Instrument (Futures)
       </h5>
       <div className="flex flex-col mb-1.5">
         <div className="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6">

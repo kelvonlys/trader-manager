@@ -29,7 +29,7 @@ const InstrutmentTable = () => {
     const fetchPositions = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/open-positions`);
-        if (!res.ok) throw new Error("Failed to fetch positions");
+        if (!res.ok) throw new Error("Cannot to connect to server");
         const data = await res.json();
         if (data.status === "success") {
           setPositions(data.positions);
@@ -54,7 +54,7 @@ const InstrutmentTable = () => {
   }, []);
 
   const closePosition = async (ticket: number) => {
-    if (!confirm(`Close ticket #${ticket}?`)) return;
+    if (!confirm(`Close position #${ticket}?`)) return;
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/close/${ticket}`, {
@@ -75,7 +75,7 @@ const InstrutmentTable = () => {
         setPositions(refreshData.positions);
       }
     } catch (err: any) {
-      alert(`Failed to close #${ticket}\n${err.message}`);
+      alert(`Cannot close #${ticket}\n${err.message}`);
     }
   };
 
@@ -90,9 +90,9 @@ const InstrutmentTable = () => {
   if (error) {
     return (
       <div className="rounded-[10px] bg-white px-7.5 py-10 shadow-1 dark:bg-gray-dark text-center">
-        <p className="text-red-500 font-medium">Error: {error}</p>
+        <p className="text-red-500 font-medium">{error}</p>
         <p className="text-sm text-gray-500 mt-2">
-          Make sure your FastAPI server is running
+          Please refresh the page and try again
         </p>
       </div>
     );
@@ -106,7 +106,7 @@ const InstrutmentTable = () => {
 
       <div className="flex flex-col">
         {/* Header */}
-        <div className="grid grid-cols-3 sm:grid-cols-7">
+        <div className="grid grid-cols-3 sm:grid-cols-8">
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">Symbol</h5>
           </div>
@@ -121,6 +121,9 @@ const InstrutmentTable = () => {
           </div>
           <div className="hidden px-2 pb-3.5 text-center sm:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">T/P</h5>
+          </div>
+          <div className="hidden px-2 pb-3.5 text-center sm:block">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">Volume</h5>
           </div>
           <div className="hidden px-2 pb-3.5 text-center sm:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">Profit</h5>
@@ -138,7 +141,7 @@ const InstrutmentTable = () => {
         ) : (
           positions.map((position, key) => (
             <div
-              className={`grid grid-cols-3 sm:grid-cols-7 hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg hover:-translate-y-1 transition-all duration-300${
+              className={`grid grid-cols-3 sm:grid-cols-8 hover:bg-gray-100 rounded-[10px] dark:hover:bg-gray-700 group hover:rounded-lg ${
                 key === positions.length - 1
                   ? ""
                   : "border-b border-stroke dark:border-dark-3"
@@ -176,12 +179,18 @@ const InstrutmentTable = () => {
               </div>
 
               <div className="hidden items-center justify-center px-2 py-4 sm:flex">
+                <p className="font-medium text-dark dark:text-white">
+                  {position.volume}
+                </p>
+              </div>
+
+              <div className="hidden items-center justify-center px-2 py-4 sm:flex">
                 <p
                   className={` ${
                     position.profit >= 0 ? "text-blue-500" : "text-red-500"
                   }`}
                 >
-                  {position.profit >= 0 ? "+" : ""}{position.profit}
+                  {position.profit >= 0 ? "+" : ""}{position.profit.toFixed(2)}
                 </p>
               </div>
 

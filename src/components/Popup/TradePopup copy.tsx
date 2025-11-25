@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ButtonDefault from "@/components/Buttons/ButtonDefault";
 
 interface TradePopupBoxProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
   const [isTakeProfitChecked, setIsTakeProfitChecked] = useState(true);
   const [isStopLossChecked, setIsStopLossChecked] = useState(true);
   const popupRef = useRef<HTMLDivElement>(null);
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -27,6 +29,7 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
     }
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -39,100 +42,34 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
     setLoading(true);
     setMessage('');
 
+    // Get the lots value from the input
     const lotsInput = document.querySelector('input[placeholder="Enter Position Size"]') as HTMLInputElement;
-    const inputValue = lotsInput?.value.trim() || "";
-    const lots = parseFloat(inputValue);
-    
-    if (!inputValue || isNaN(lots) || lots <= 0) {
-      setMessage("Invalid position size");
-      setLoading(false);
-      return;
-    }
+    const lots = parseFloat(lotsInput?.value || '0.01') || 0.01;
 
-    if (lots < 0.01) {
-      setMessage("Minimum position size is 0.01 lots");
-      setLoading(false);
-      return;
-    }
-
-    const price = side === "buy" ? ask : bid;
-    if (!price) {
-      setMessage('Error: Price not available');
-      setLoading(false);
-      return;
-    }
-
-    let sl = 0;
-    let tp = 0;
-
-    // Get SL/TP values only if enabled
-    if (isStopLossChecked) {
-      const slInput = document.querySelector('input[placeholder="Price"][data-type="sl"]') as HTMLInputElement;
-      if (slInput?.value) {
-        sl = parseFloat(slInput.value);
-        if (isNaN(sl)) {
-          setMessage('Invalid Stop Loss');
-          setLoading(false);
-          return;
-        }
-        if ((side === "buy" && sl >= price) || (side === "sell" && sl <= price)) {
-          setMessage(side === "buy" ? 'SL must be below price' : 'SL must be above price');
-          setLoading(false);
-          return;
-        }
-      }
-    }
-
-    if (isTakeProfitChecked) {
-      const tpInput = document.querySelector('input[placeholder="Price"][data-type="tp"]') as HTMLInputElement;
-      if (tpInput?.value) {
-        tp = parseFloat(tpInput.value);
-        if (isNaN(tp)) {
-          setMessage('Invalid Take Profit');
-          setLoading(false);
-          return;
-        }
-        if ((side === "buy" && tp <= price) || (side === "sell" && tp >= price)) {
-          setMessage(side === "buy" ? 'TP must be above price' : 'TP must be below price');
-          setLoading(false);
-          return;
-        }
-      }
-    }
+    console.log(symbol, side, lots)
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trade`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          symbol: symbol,
+          symbol: symbol,        
           action: side,
-          volume: lots,
-          sl: sl || 0,
-          tp: tp || 0,
+          volume: lots
         }),
       });
 
       const data = await res.json();
 
-      if (!res.ok) {
-        let errorMessage = "Trade failed";
-
-        if (typeof data.detail === "string") {
-          errorMessage = data.detail;
-        } else if (data.detail?.message) {
-          errorMessage = data.detail.message;
-        } else if (data.message) {
-          errorMessage = data.message;
-        }
-
-        throw new Error(errorMessage);
-      }
+      if (!res.ok) throw new Error(data.detail || data.error || 'Trade failed');
 
       setMessage('Order executed • Market filled');
-      setTimeout(() => onClose(), 1500);
+      setTimeout(() => {
+        onClose();
+      }, 1500);
+
     } catch (err: any) {
-      setMessage(`${err.message}`);
+      setMessage(`Error: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -149,19 +86,20 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
             </svg>
           </button>
         </div>
-
+        
         {/* Position Size */}
-        <div className="mb-4">
+        {/* <div className="mb-4"> */} 
+        <div className="mb-10 mt-10">
           <label className="block mb-2 text-gray-400">Position Size (Lots) *</label>
-          <input type="text" className="w-full px-3 py-3 border rounded-lg bg-gray-900 text-gray-200 border-gray-700 placeholder-gray-500" placeholder="Enter Position Size" defaultValue="0.01" />
+          <input type="text" className="w-full px-3 py-3 border rounded-lg bg-gray-900 text-gray-200 border-gray-700 placeholder-gray-500" placeholder="Enter Position Size" />
         </div>
 
         {/* Take Profit Section */}
-        <div className="mb-4 flex items-center justify-between">
+        {/* <div className="mb-4 flex items-center justify-between">
           <label className="flex items-center text-gray-400">
             <div className="relative">
-              <input
-                type="checkbox"
+              <input 
+                type="checkbox" 
                 className="sr-only"
                 checked={isTakeProfitChecked}
                 onChange={(e) => setIsTakeProfitChecked(e.target.checked)}
@@ -172,27 +110,26 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
             <span className="ml-3">Take Profit</span>
           </label>
         </div>
+
         {isTakeProfitChecked && (
           <>
             <div className="flex mb-1">
               <label className="block mb-2 text-gray-400">Take Profit</label>
             </div>
+
             <div className="flex mb-10 space-x-7">
-              {/* <input type="text" data-type="tp" className="w-1/2 px-3 py-3 border rounded-lg bg-gray-900 text-gray-200 border-gray-700 placeholder-gray-500" placeholder="Price" />
+              <input type="text" className="w-1/2 px-3 py-3 border rounded-lg bg-gray-900 text-gray-200 border-gray-700 placeholder-gray-500" placeholder="Price" />
               <input type="text" className="w-1/2 px-3 py-3 border rounded-lg bg-gray-900 text-gray-200 border-gray-700 placeholder-gray-500" placeholder="Pips" />
-               */}
-              <input type="text" data-type="tp" className="w-full px-3 py-3 border rounded-lg bg-gray-900 text-gray-200 border-gray-700 placeholder-gray-500" placeholder="Price" />
-              
             </div>
           </>
-        )}
+        )} */}
 
         {/* Stop Loss Section */}
-        <div className="mb-4 flex items-center justify-between">
+        {/* <div className="mb-4 flex items-center justify-between">
           <label className="flex items-center text-gray-400">
             <div className="relative">
-              <input
-                type="checkbox"
+              <input 
+                type="checkbox" 
                 className="sr-only"
                 checked={isStopLossChecked}
                 onChange={(e) => setIsStopLossChecked(e.target.checked)}
@@ -202,22 +139,20 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
             </div>
             <span className="ml-3">Stop Loss</span>
           </label>
-        </div>
+        </div> 
+
         {isStopLossChecked && (
           <>
             <div className="flex mb-4">
               <label className="block mb-2 text-gray-400">Stop Loss</label>
             </div>
             <div className="flex mb-10 space-x-7">
-              {/* <input type="text" data-type="sl" className="w-1/2 px-3 py-3 border rounded-lg bg-gray-900 text-gray-200 border-gray-700 placeholder-gray-500" placeholder="Price" />
-              <input type="text" className="w-1/2 px-3 py-3 border rounded-lg bg-gray-900 text-gray-200 border-gray-700 placeholder-gray-500" placeholder="Pips" /> */}
-              <input type="text" data-type="sl" className="w-full px-3 py-3 border rounded-lg bg-gray-900 text-gray-200 border-gray-700 placeholder-gray-500" placeholder="Price" />
-              
-
+              <input type="text" className="w-1/2 px-3 py-3 border rounded-lg bg-gray-900 text-gray-200 border-gray-700 placeholder-gray-500" placeholder="Price" />
+              <input type="text" className="w-1/2 px-3 py-3 border rounded-lg bg-gray-900 text-gray-200 border-gray-700 placeholder-gray-500" placeholder="Pips" />
             </div>
           </>
-        )}
-
+        )}*/}
+        
         {/* Buy or Sell Buttons */}
         <div className="mb-1">
           <div className="flex space-x-0.5">
@@ -229,6 +164,7 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
               <div>{loading ? 'Sending...' : 'Sell'}</div>
               <div>{ask ?? '-'}</div>
             </button>
+
             <button
               onClick={() => executeTrade('buy')}
               disabled={loading}
@@ -237,18 +173,19 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
               <div>{loading ? 'Sending...' : 'Buy'}</div>
               <div>{bid ?? '-'}</div>
             </button>
+            
           </div>
         </div>
-
         {message && (
-          <div className={`text-center mt-6 text-lg font-bold ${message.includes('Volume') || message.includes('TP') ||  message.includes('volume') || message.includes('position') || 
-            message.includes('failed') ? 'text-red-400' : 'text-gray-200'}`}>
+          <div className={`text-center mt-6 text-lg font-bold ${message.includes('Error') || message.includes('failed') ? 'text-red-400' : 'text-gray-200'}`}>
             {message}
           </div>
         )}
+
       </div>
     </div>
   );
 };
 
 export default TradePopupBox;
+
