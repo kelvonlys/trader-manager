@@ -79,12 +79,12 @@ export default function TradingViewChart({ symbol, bid, ask, onTrade }: Props) {
 
       {/* COMPACT TRADING PANEL */}
       <div className="absolute top-0 right-0 z-50 flex items-center gap-3 bg-black/95 backdrop-blur-sm px-5 py-3 rounded-xl border border-gray-700">
-        <input
+        {/* <input
           type="text"
           value={volume}
           onChange={(e) => setVolume(e.target.value.replace(/[^0-9.]/g, ''))}
           className="w-20 px-3 py-2 bg-gray-900 text-white rounded border border-gray-600 focus:border-blue-500 outline-none text-sm"
-        />
+        /> */}
         <button
           onClick={() => onTrade('sell', parseFloat(volume) || 0.1)}
           className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded text-sm transition"

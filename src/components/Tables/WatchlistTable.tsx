@@ -213,7 +213,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
           <ButtonDefault
             label="Chart"
             onClick={() => router.push(`/charts?symbol=${pair.pair}`)}
-            customClasses="bg-blue-700 hover:bg-blue-800 text-white px-10 py-3 text-xs sm:px-4 font-semibold transition"
+            customClasses="bg-blue-700 hover:bg-blue-800 text-white px-10 py-3 text-xs sm:px-4"
           />
           {/* <ButtonDefault
             label="Manage"
