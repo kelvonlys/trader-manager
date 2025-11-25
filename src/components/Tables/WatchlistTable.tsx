@@ -8,6 +8,8 @@ import PopupBox from "@/components/Popup/BasicPopup"
 import { useState } from 'react';
 import { useEffect } from "react";
 import TradePopupBox from "@/components/Popup/TradePopup";
+import { useRouter } from 'next/navigation';
+import TradingViewChart from "@/components/TradingviewChart";
 
 const watchlistData: WATCHLIST[] = [
 
@@ -100,7 +102,7 @@ const WatchlistTable = () => {
         Instrument (Futures)
       </h5>
       <div className="flex flex-col mb-1.5">
-        <div className="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-7">
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Symbol
@@ -152,9 +154,11 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
   const openTradePopup = () => setIsTradePopupOpen(true);
   const closeTradePopup = () => setIsTradePopupOpen(false);
 
+  const router = useRouter();
+
   return (
     <div className="py-0.5">
-      <div className={`grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6 hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
+      <div className={`grid grid-cols-2 md:grid-cols-5 xl:grid-cols-7 hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
         <div className="flex items-center gap-3.5 px-2 py-4 col-span-1.5">
           <div className="flex-shrink-0 h-12 relative">
             <Image
@@ -205,16 +209,21 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
           {priceData?.day_change_pct || pair.day_change_pct} %
         </div>
         
-        {/* <div className="flex items-center justify-center px-2 py-4 col-span-1">
+        <div className="flex items-center justify-center px-2 py-4 col-span-1">
           <ButtonDefault
+            label="Chart"
+            onClick={() => router.push(`/charts?symbol=${pair.pair}`)}
+            customClasses="bg-blue-700 hover:bg-blue-800 text-white px-10 py-3 text-xs sm:px-4 font-semibold transition"
+          />
+          {/* <ButtonDefault
             label="Manage"
             // onClick={() => { alert("Manage button clicked!"); }}
             onClick={openPopup}
             customClasses="bg-blue-700 text-white px-10 py-3 text-xs sm:px-4"
           />
-          <PopupBox isOpen={isPopupOpen} onClose={closePopup} />
-        </div> */}
-        <div className="flex items-center justify-center px-2 py-4 col-span-1">
+          <PopupBox isOpen={isPopupOpen} onClose={closePopup} /> */}
+        </div>
+        <div className="hidden flex items-center justify-center px-2 py-4 col-span-1 md:flex">
           <ButtonDefault
             label="Trade"
             // onClick={() => { alert("Manage button clicked!"); }}
