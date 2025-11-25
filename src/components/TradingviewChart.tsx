@@ -62,7 +62,7 @@ export default function TradingViewChart({ symbol, bid, ask, onTrade }: Props) {
 
   return (
     <div className="relative w-full bg-black rounded-2xl overflow-hidden border border-gray-800">
-      <div className="h-[calc(100vh-120px)] w-full relative">
+      <div className="h-[calc(75vh)] w-full relative">
         <div className="absolute top-0 right-0 z-50 flex items-center gap-3 bg-black/90 backdrop-blur-md px-5 py-3 rounded-xl border border-gray-700 shadow-2xl">
           <button
             onClick={() => onTrade('sell', 0.10)}
