@@ -76,7 +76,7 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
           return;
         }
         if ((side === "buy" && sl >= price) || (side === "sell" && sl <= price)) {
-          setMessage(side === "buy" ? 'SL must be below price' : 'SL must be above price');
+          setMessage(side === "buy" ? 'Stop loss must be below price' : 'Stop loss must be above price');
           setLoading(false);
           return;
         }
@@ -93,7 +93,7 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
           return;
         }
         if ((side === "buy" && tp <= price) || (side === "sell" && tp >= price)) {
-          setMessage(side === "buy" ? 'TP must be above price' : 'TP must be below price');
+          setMessage(side === "buy" ? 'Take profit must be above price' : 'Take profit must be below price');
           setLoading(false);
           return;
         }
@@ -241,7 +241,7 @@ const TradePopupBox: React.FC<TradePopupBoxProps> = ({ isOpen, onClose, symbol =
         </div>
 
         {message && (
-          <div className={`text-center mt-6 text-lg font-bold ${message.includes('Volume') || message.includes('TP') ||  message.includes('volume') || message.includes('position') || 
+          <div className={`text-center mt-6 text-lg font-bold ${message.includes('Volume') || message.includes('must') ||  message.includes('volume') || message.includes('position') || 
             message.includes('failed') ? 'text-red-400' : 'text-gray-200'}`}>
             {message}
           </div>
