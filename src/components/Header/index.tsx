@@ -68,7 +68,7 @@ const Header = (props: {
 
         <div className="hidden xl:block">
           <div>
-            <h1 className="mb-0.5 text-3xl font-bold text-dark dark:text-white">
+            <h1 className="mb-0.5 text-4xl md:text-4xl font-space font-medium bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
               Dashboard
             </h1>
             <p className="font-bold">Manage your trades here</p>

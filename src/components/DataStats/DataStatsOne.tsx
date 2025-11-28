@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
+import EquityCurvePro from "@/components/EquitySparkline";
+import MiniTVChart from "@/components/MiniTVChart";
 
 interface AccountData {
   balance: number;
@@ -45,6 +47,9 @@ const DataStatsOne: React.FC = () => {
   if (loading || !account) {
     return <div className="text-center py-10">Loading account...</div>;
   }
+
+  const liveProfit = account.profit;                   
+  const currentEquity = account.equity;              
 
   return (
     <>
@@ -96,6 +101,16 @@ const DataStatsOne: React.FC = () => {
             </span>
           </div>
         </div>
+
+        {/* Equity Curve */}
+        {/* <div className="col-span-2">
+          <EquityCurvePro equity={account.equity} profit={account.profit} />
+        </div> */}
+
+        {/* Tradingview Chart on dashboard
+        <div className="col-span-2 mt-8">
+          <MiniTVChart symbol="EURUSD" height={400}/>
+        </div> */}
 
       </div>
     </>

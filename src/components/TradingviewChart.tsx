@@ -66,15 +66,15 @@ export default function TradingViewChart({ symbol, bid, ask, onTrade }: Props) {
         <div className="absolute top-0 right-0 z-50 flex items-center gap-3 bg-black/90 backdrop-blur-md px-5 py-3 rounded-xl border border-gray-700 shadow-2xl">
           <button
             onClick={() => onTrade('sell', 0.10)}
-            className="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-xl transition-all"
+            className="px-10 py-3 text-white font-bold text-xs bg-gradient-to-r from-red-400 via-rose-600 to-red-700 hover:from-red-200 hover:via-rose-500 hover:to-red-600 rounded-lg shadow-lg hover:shadow-red-500/50 transition-all duration-300 transform hover:scale-105 active:scale-95 border-red-500/30"
           >
             SELL
           </button>
           <button
             onClick={() => onTrade('buy', 0.10)}
-            className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-xl transition-all"
+            className="px-10 py-3 text-white font-bold text-xs bg-gradient-to-r from-cyan-500 via-blue-600 to-blue-700 hover:from-cyan-400 hover:via-blue-500 hover:to-blue-600 rounded-lg shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 border-cyan-500/30"
           >
-            BUY
+            BUY 
           </button>
         </div>
 

@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import TradePopupBox from "@/components/Popup/TradePopup";
 import { useRouter } from 'next/navigation';
 import TradingViewChart from "@/components/TradingviewChart";
+import TVSparkline from "@/components/TVSparkline";
 
 const watchlistData: WATCHLIST[] = [
 
@@ -102,28 +103,28 @@ const WatchlistTable = () => {
         Instrument (Futures)
       </h5>
       <div className="flex flex-col mb-1.5">
-        <div className="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-7">
-          <div className="px-2 pb-3.5">
+        <div className="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6">
+          <div className="col-span-1 px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Symbol
             </h5>
           </div>
-          <div className="hidden px-2 pb-3.5 text-center md:block">
+          <div className="hidden col-span-1 px-2 pb-3.5 text-center md:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Bid
             </h5>
           </div>
-          <div className="hidden px-2 pb-3.5 text-center md:block">
+          <div className="hidden col-span-1 px-2 pb-3.5 text-center md:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Ask
             </h5>
           </div>
-          <div className="hidden px-2 pb-3.5 text-center md:block">
+          <div className="hidden col-span-1 px-2 pb-3.5 text-center md:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Spread
             </h5>
           </div>
-          <div className="hidden px-2 pb-3.5 text-center xl:block">
+          <div className="hidden col-span-1 px-2 pb-3.5 text-center xl:block">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Change Percentage
             </h5>
@@ -158,8 +159,8 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
 
   return (
     <div className="py-0.5">
-      <div className={`grid grid-cols-2 md:grid-cols-5 xl:grid-cols-7 hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
-        <div className="flex items-center gap-3.5 px-2 py-4 col-span-1.5">
+      <div className={`grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6 hover:bg-gray-100 dark:hover:bg-gray-700 group hover:rounded-lg`}>
+        <div className="flex col-span-1 items-center gap-3.5 px-2 py-4">
           <div className="flex-shrink-0 h-12 relative">
             <Image
               alt="First Symbol"
@@ -176,7 +177,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
               height={30}
             />
           </div>
-          <div className="ml-3 flex-grow w-[200px] min-w-0">
+          <div className="ml-6 flex-grow w-[200px] min-w-0">
             <p className="font-medium text-dark dark:text-white sm:block truncate">
               {pair.pairName}
             </p>
@@ -209,26 +210,24 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
           {priceData?.day_change_pct || pair.day_change_pct} %
         </div>
         
-        <div className="flex items-center justify-center px-2 py-4 col-span-1">
+        <div className="flex items-center justify-center px-2 py-4 col-span-1 gap-4">
           <ButtonDefault
             label="Chart"
             onClick={() => router.push(`/charts?symbol=${pair.pair}`)}
-            customClasses="bg-blue-700 hover:bg-blue-800 text-white px-10 py-3 text-xs sm:px-4"
+            customClasses="bg-gradient-to-r from-cyan-500 via-blue-600 to-blue-700 
+                 hover:from-cyan-400 hover:via-blue-500 hover:to-blue-600 text-white font-bold px-10 py-3 text-xs sm:px-4 rounded-lg shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 border-cyan-500/30"
+            // customClasses="bg-blue-700 hover:bg-blue-800 text-white px-10 py-3 text-xs sm:px-4"
           />
-          {/* <ButtonDefault
-            label="Manage"
-            // onClick={() => { alert("Manage button clicked!"); }}
-            onClick={openPopup}
-            customClasses="bg-blue-700 text-white px-10 py-3 text-xs sm:px-4"
-          />
-          <PopupBox isOpen={isPopupOpen} onClose={closePopup} /> */}
-        </div>
-        <div className="hidden flex items-center justify-center px-2 py-4 col-span-1 xl:flex">
           <ButtonDefault
             label="Trade"
             // onClick={() => { alert("Manage button clicked!"); }}
             onClick={openTradePopup}
-            customClasses="bg-blue-700 text-white px-10 py-3 text-xs sm:px-4"
+            customClasses="bg-gradient-to-r from-purple-400 via-purple-700 to-indigo-700 
+                 hover:from-purple-500 hover:via-purple-600 hover:to-indigo-600 
+                 text-white font-bold px-10 py-3 text-xs sm:px-4 
+                 rounded-lg shadow-lg hover:shadow-purple-500/40 
+                 border-purple-500/40 
+                 transition-all duration-300 transform hover:scale-105 active:scale-95 text-white px-10 py-3 text-xs sm:px-4"
           />
           <TradePopupBox
             isOpen={isTradePopupOpen}
@@ -237,7 +236,35 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
             bid={priceData?.bid}
             ask={priceData?.ask}
           />
+          {/* popup trading box
+          <ButtonDefault
+            label="Manage"
+            // onClick={() => { alert("Manage button clicked!"); }}
+            onClick={openPopup}
+            customClasses="bg-blue-700 text-white px-10 py-3 text-xs sm:px-4"
+          />
+          <PopupBox isOpen={isPopupOpen} onClose={closePopup} /> */}
         </div>
+        {/* <div className="hidden flex items-center justify-center px-2 py-4 col-span-1 xl:flex">
+          <ButtonDefault
+            label="Trade"
+            // onClick={() => { alert("Manage button clicked!"); }}
+            onClick={openTradePopup}
+            customClasses="bg-gradient-to-r from-purple-400 via-purple-700 to-indigo-700 
+                 hover:from-purple-500 hover:via-purple-600 hover:to-indigo-600 
+                 text-white font-bold px-10 py-3 text-xs sm:px-4 
+                 rounded-lg shadow-lg hover:shadow-purple-500/40 
+                 border-purple-500/40 
+                 transition-all duration-300 transform hover:scale-105 active:scale-95 text-white px-10 py-3 text-xs sm:px-4"
+          />
+          <TradePopupBox
+            isOpen={isTradePopupOpen}
+            onClose={closeTradePopup}
+            symbol={pair.pair}
+            bid={priceData?.bid}
+            ask={priceData?.ask}
+          />
+        </div> */}
       </div>
       
     </div>

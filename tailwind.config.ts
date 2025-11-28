@@ -11,6 +11,7 @@ const config: Config = {
   theme: {
     fontFamily: {
       roboto: ["Roboto", "sans-serif"],
+      montserrat: ['Montserrat', 'sans-serif'],
       /*roboto: ["Noto Sans", "sans-serif"],*/
     },
     screens: {
