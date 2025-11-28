@@ -222,7 +222,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
             label="Trade"
             // onClick={() => { alert("Manage button clicked!"); }}
             onClick={openTradePopup}
-            customClasses="bg-gradient-to-r from-purple-400 via-purple-700 to-indigo-700 
+            customClasses="hidden md:flex bg-gradient-to-r from-purple-400 via-purple-700 to-indigo-700 
                  hover:from-purple-500 hover:via-purple-600 hover:to-indigo-600 
                  text-white font-bold px-10 py-3 text-xs sm:px-4 
                  rounded-lg shadow-lg hover:shadow-purple-500/40 
