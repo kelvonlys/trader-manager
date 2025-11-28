@@ -215,7 +215,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
             label="Chart"
             onClick={() => router.push(`/charts?symbol=${pair.pair}`)}
             customClasses="bg-gradient-to-r from-cyan-500 via-blue-600 to-blue-700 
-                 hover:from-cyan-400 hover:via-blue-500 hover:to-blue-600 text-white font-bold px-10 py-3 text-xs sm:px-4 rounded-lg shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 border-cyan-500/30"
+                 hover:from-cyan-400 hover:via-blue-500 hover:to-blue-600 text-white font-bold px-4 py-3 text-xs rounded-lg shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 border-cyan-500/30"
             // customClasses="bg-blue-700 hover:bg-blue-800 text-white px-10 py-3 text-xs sm:px-4"
           />
           <ButtonDefault
@@ -227,7 +227,7 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
                  text-white font-bold px-10 py-3 text-xs sm:px-4 
                  rounded-lg shadow-lg hover:shadow-purple-500/40 
                  border-purple-500/40 
-                 transition-all duration-300 transform hover:scale-105 active:scale-95 text-white px-10 py-3 text-xs sm:px-4"
+                 transition-all duration-300 transform hover:scale-105 active:scale-95 text-white px-4 py-3 text-xs"
           />
           <TradePopupBox
             isOpen={isTradePopupOpen}
