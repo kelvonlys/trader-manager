@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import useColorMode from '@/hooks/useColorMode';
 
 interface Props {
   symbol: string;
@@ -15,6 +16,9 @@ export default function TradingViewChart({ symbol, bid, ask, onTrade }: Props) {
   const bidRef = useRef<HTMLSpanElement>(null);
   const askRef = useRef<HTMLSpanElement>(null);
   const spreadRef = useRef<HTMLSpanElement>(null);
+  const widgetRef = useRef<any>(null); // To store the widget instance
+
+  const [colorMode] = useColorMode();
 
   // Update live prices
   useEffect(() => {
@@ -25,9 +29,16 @@ export default function TradingViewChart({ symbol, bid, ask, onTrade }: Props) {
     }
   }, [bid, ask]);
 
+
   // Load TradingView only when symbol changes
   useEffect(() => {
     if (!containerRef.current) return;
+
+    // Clean up previous widget
+    if (widgetRef.current) {
+      widgetRef.current.remove();
+      widgetRef.current = null;
+    }
 
     containerRef.current.innerHTML = '<div id="tv_container" class="w-full h-full"></div>';
 
@@ -77,12 +88,6 @@ export default function TradingViewChart({ symbol, bid, ask, onTrade }: Props) {
             BUY 
           </button>
         </div>
-
-        {/* <div className="absolute top-4 left-4 z-50 bg-black/90 backdrop-blur-md px-6 py-3 rounded-xl border border-gray-700">
-          <span className="text-red-400 font-medium">BID <span ref={bidRef} className="text-xl font-bold ml-2">{bid.toFixed(5)}</span></span>
-          <span className="text-green-400 font-medium ml-6">ASK <span ref={askRef} className="text-xl font-bold ml-2">{ask.toFixed(5)}</span></span>
-          <span className="text-gray-400 ml-6">Spread <span ref={spreadRef} className="font-bold">{((ask - bid) * 10000).toFixed(1)}</span>p</span>
-        </div> */}
               
         <div ref={containerRef} className="absolute inset-0" />
       </div>
