@@ -30,6 +30,12 @@ export default function TradingviewChartPage() {
     document.title = `${urlSymbol} • Live Chart`;
   }, [urlSymbol]);
 
+  useEffect(() => {
+    if (priceData) {
+      console.log("Chart page received new price:", priceData.bid, priceData.ask);
+    }
+  }, [priceData]);
+
   // Determine correct TradingView symbol prefix
   const getTVSymbol = (sym: string) => {
     const upper = sym.toUpperCase();
@@ -54,13 +60,6 @@ export default function TradingviewChartPage() {
       <div className="p-4 md:p-0.5">
         <h1 className="mb-4 text-2xl font-bold text-white">{urlSymbol}</h1>
 
-        <TradingViewChart
-          symbol={getTVSymbol(urlSymbol)}  // TradingView format
-          bid={priceData.bid}
-          ask={priceData.ask}
-          onTrade={openTrade}
-        />
-
         <TradePopupBox
           isOpen={isTradePopupOpen}
           onClose={() => setIsTradePopupOpen(false)}
@@ -68,6 +67,15 @@ export default function TradingviewChartPage() {
           bid={priceData.bid}
           ask={priceData.ask}
         />
+        
+        <TradingViewChart
+          symbol={getTVSymbol(urlSymbol)}  // TradingView format
+          bid={priceData.bid}
+          ask={priceData.ask}
+          onTrade={openTrade}
+        />
+
+        
       </div>
     </DefaultLayout>
   );

@@ -74,7 +74,7 @@ export default function TradingViewChart({ symbol, bid, ask, onTrade }: Props) {
   return (
     <div className="relative w-full bg-black rounded-2xl overflow-hidden border border-gray-800">
       <div className="h-[calc(75vh)] w-full relative">
-        <div className="absolute top-0 right-0 z-50 flex items-center gap-3 bg-black/90 backdrop-blur-md px-5 py-3 rounded-xl border border-gray-700 shadow-2xl">
+        {/* <div className="absolute top-0 right-0 z-50 flex items-center gap-3 bg-black/90 backdrop-blur-md px-5 py-3 rounded-xl border border-gray-700 shadow-2xl">
           <button
             onClick={() => onTrade('sell', 0.10)}
             className="px-10 py-3 text-white font-bold text-xs bg-gradient-to-r from-red-400 via-rose-600 to-red-700 hover:from-red-200 hover:via-rose-500 hover:to-red-600 rounded-lg shadow-lg hover:shadow-red-500/50 transition-all duration-300 transform hover:scale-105 active:scale-95 border-red-500/30"
@@ -87,7 +87,7 @@ export default function TradingViewChart({ symbol, bid, ask, onTrade }: Props) {
           >
             BUY 
           </button>
-        </div>
+        </div> */}
               
         <div ref={containerRef} className="absolute inset-0" />
       </div>
