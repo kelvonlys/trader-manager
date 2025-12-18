@@ -213,7 +213,8 @@ const WatchlistRow = ({ pair }: { pair: WATCHLIST }) => {
         <div className="flex items-center justify-center px-2 py-4 col-span-1 gap-4">
           <ButtonDefault
             label="Chart"
-            onClick={() => router.push(`/charts?symbol=${pair.pair}`)}
+            onClick={() => router.push(`/charts?symbol=${pair.pair}bid=${pair.bid}
+          ask=${pair.ask}`)}
             customClasses="bg-gradient-to-r from-cyan-500 via-blue-600 to-blue-700 
                  hover:from-cyan-400 hover:via-blue-500 hover:to-blue-600 text-white font-bold px-4 py-3 text-xs rounded-lg shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 border-cyan-500/30"
             // customClasses="bg-blue-700 hover:bg-blue-800 text-white px-10 py-3 text-xs sm:px-4"
