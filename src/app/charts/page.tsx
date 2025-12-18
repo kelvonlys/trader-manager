@@ -30,6 +30,15 @@ export default function TradingviewChartPage() {
     document.title = `${urlSymbol} • Live Chart`;
   }, [urlSymbol]);
 
+  // Determine correct TradingView symbol prefix
+  const getTVSymbol = (sym: string) => {
+    const upper = sym.toUpperCase();
+    if (['BTCUSD', 'ETHUSD', 'SOLUSD', 'ADAUSD'].includes(upper)) {
+      return `BINANCE:${upper}`;
+    }
+    return `FX:${upper}`;
+  };
+
   if (!priceData) {
     return (
       <DefaultLayout>
@@ -46,7 +55,7 @@ export default function TradingviewChartPage() {
         <h1 className="mb-4 text-2xl font-bold text-white">{urlSymbol}</h1>
 
         <TradingViewChart
-          symbol={`FX:${urlSymbol}`}  // TradingView format
+          symbol={getTVSymbol(urlSymbol)}  // TradingView format
           bid={priceData.bid}
           ask={priceData.ask}
           onTrade={openTrade}
